@@ -1,0 +1,6 @@
+"""CONFIGURATION CONSTANS"""
+
+VARS = ['AccXSignal', 'VelZSignal', 'AccXSignal1', 'MicSignal']
+TRAIN_FILES_DIR = 'train/'
+TRAIN_FILES_LAST_GOOD = 552
+TRAIN_PERCENT = 0.9

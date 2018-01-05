@@ -1,37 +1,30 @@
 """Utility functions"""
 
-import math
-import scipy.io as sio
+import os
+import csv
 import numpy as np
-import config as c
+import scipy.io as sio
 import scipy.stats as ss
-from sklearn.metrics import mean_squared_error
 from statsmodels import robust
-import matplotlib.pyplot as plt
+
+from config import CONFIG as c
 
 def rms(arr):
-    return float(np.sqrt(np.mean(np.square(arr))))
+    return float(np.sqrt(np.mean([x*x for x in arr])))
 
-Fs = 25000
-T = 1/Fs
-L = 16000
-t = np.linspace(0.0, L*T, L)
-m = int(L/2)
-f = [2*Fs*(x)/L for x in list(range(0, m))]
-thousandHertsIndex = f.index(next(i for i in f if i > 1000))
 
 def getFFT(arr):
     dataFFT = np.fft.fft(arr)
-    P2 = np.abs(dataFFT/L)
-    P1 = P2[0:m]
+    P2 = np.abs(dataFFT/c['L'])
+    P1 = P2[0:c['m']]
     P1 = 2*P1
 
-    return P1[0:thousandHertsIndex]
+    return P1[0:c['thousandHertsIndex']]
 
 
 def extract_features(file_data):
     """FN DOSCSTING"""
-    signals = [np.transpose(file_data[signal])[0] for signal in c.VARS]
+    signals = [np.transpose(file_data[signal])[0] for signal in c['VARS']]
     ffts = [getFFT(signal) for signal in signals]
     signals.extend(ffts)
 
@@ -49,9 +42,24 @@ def extract_features(file_data):
         ])
     return features_list
 
-def load_train_files(file_names, dir=""):
+def get_signal_features(file_names, dir="", exists=False, csvfilename=''):
     """FN DOCSTRING"""
-    result = []
-    for item in file_names:
-        result.append(extract_features(sio.loadmat(dir + item)))
-    return np.matrix(result)
+
+    if exists is False:
+        result = [extract_features(sio.loadmat(dir + item))
+                  for item in file_names]
+        save_features_to_file(result)
+        return np.matrix(result)
+    else:
+        with open(csvfilename, 'r', newline='') as csvfile:
+            return np.matrix(csvfile)
+
+
+def save_features_to_file(features):
+    """FN DOCSTRING"""
+
+    with open("features.csv", "w", newline='') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',')
+        writer.writerow(['sep=,'])
+        for f in features:
+            writer.writerow(f)

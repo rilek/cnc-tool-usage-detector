@@ -1,19 +1,22 @@
 """Classifiers testing module"""
 
 import numpy as np
+import sklearn.metrics as metrics
 from sklearn.model_selection import train_test_split
 from sklearn.externals import joblib
+from colorama import init, Fore, Back, Style
 import features
 import utils as u
 from config import CONFIG as c
 
+init()
 
 def test_classifiers(classifiers, config, model_filename='model.pkl'):
     """Take array of classifiers to test and configuration dictionary
     Tests each classifier, its score is printed.
     Best one is printed with score ans saved to 'model_filename' file """
 
-    x_data = features.get_signal_features(config['TRAIN_FILES_DIR'], config, True, 'features.csv')
+    x_data = features.get_signal_features(config['TRAIN_FILES_DIR'], config, config['EXISTS'], 'features.csv')
     y_data = np.matrix([0]*config['TRAIN_FILES_LAST_GOOD'] + \
                        [1]*(x_data.shape[0] - config['TRAIN_FILES_LAST_GOOD']))
 
@@ -27,24 +30,45 @@ def test_classifiers(classifiers, config, model_filename='model.pkl'):
                          test_size=1-config['TRAIN_PERCENT'],
                          random_state=0)
 
+    u.pprint("\nAlgorithms metrics:", 'green', end='')
+    
     models = []
-    for name, clf in classifiers:
+    for n, (name, clf) in enumerate(classifiers):
+        n = n+1
         clf.fit(x_train, np.array(y_train).ravel())
-        score = clf.score(x_test, y_test)
-        models.append([score, clf, name])
+        y_pred = [[clf.predict(x)[0]] for x in x_test]
+        score = metrics.accuracy_score(y_test, y_pred)
+        fpr, tpr, _ = metrics.roc_curve(y_test, y_pred)
+        auc = metrics.auc(fpr, tpr)
+        cm = metrics.confusion_matrix(y_test, y_pred)
+        [[tp, fp], [fn, tn]] = cm
 
-    models.sort(key=lambda x: -x[0])
 
-    print("Models score sorted decs:")
-    for score, clf, name in models:
-        u.print_model_score(name, score)
 
-    best_model = models[0]
+        u.pprint("\n{}.{}:".format(n, name), 'yellow')
+        print("Score: {}%".format(round(score*100, 2)))
+        print("False Alarm Rate: {}%".format(round(fp/(tn+fp)*100, 2)))
+        print("AUC: {}".format(round(auc, 2)))
+        print("Report: ")
+        print(metrics.classification_report(y_test, np.matrix(y_pred),
+                                            target_names=['Tępe', 'Ostre']))
+        print("Confusion matrix:")
+        u.print_cm(cm, ["Tępe", "Ostre"])
 
-    print("\nChosen model: {}, with score: {}%"
-          .format(best_model[2], round(best_model[0]*100, 2)))
+        models.append([clf, name, score, n])
 
-    joblib.dump(best_model[1], model_filename)
+    models.sort(key=lambda x: -x[2])
+
+    u.pprint("\nModels score, sorted decs:", 'green')
+    for clf, name, score, n in models:
+        u.print_model_score(name, score, n)
+
+    [bm_model, bm_name, bm_score, bm_n] = models[0]
+
+    u.pprint("\nChosen model: {}.{}, with score: {}%".format(bm_n, bm_name, round(bm_score*100, 2)),
+             'red')
+
+    joblib.dump(bm_model, model_filename)
 
 
 if __name__ == '__main__':

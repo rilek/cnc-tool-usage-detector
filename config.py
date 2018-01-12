@@ -40,5 +40,6 @@ CONFIG = {
     't': np.linspace(0.0, L*T, L),
     'm': M,
     'f': F,
-    'thousandHertsIndex': F.index(next(i for i in F if i > 1000))
+    'thousandHertsIndex': F.index(next(i for i in F if i > 1000)),
+    'EXISTS': True
 }

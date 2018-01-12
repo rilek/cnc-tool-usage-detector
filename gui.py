@@ -6,6 +6,8 @@ from appJar import gui
 import features as f
 from config import CONFIG as c
 
+import datetime
+
 API_URL = 'http://localhost:8080'
 HEADERS = {"Content-Type": "application/json"}
 APP = gui()
@@ -24,9 +26,14 @@ def press(button, config):
     Executes action assigned to button"""
 
     if button == "SEND":
+        ts = datetime.datetime.now()
+
         file_path = APP.getEntry("f")
         features = f.extract_features(file_path, config)
         response = send_request(features)
+
+        tf = datetime.datetime.now()
+        print(tf-ts)
 
         if response == "1":
             APP.setLabelBg("result", "red")
@@ -48,7 +55,6 @@ def start_gui(config):
     APP.addLabel("resultText", "Waiting", 0, 1, 2)
 
     APP.addFileEntry("f", 1, 0, 3)
-
     APP.addButton("SEND",
                   press_fn,
                   2, 0, 3)

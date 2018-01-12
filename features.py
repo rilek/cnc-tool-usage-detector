@@ -9,12 +9,6 @@ from statsmodels import robust
 import utils as u
 
 
-def rms(arr):
-    """Takes array of numbers.
-    Returns Root Mean Square of it."""
-
-    return float(np.sqrt(np.mean([x*x for x in arr])))
-
 def get_fft(arr, config):
     """Takes array of numbers.
     Returns One-Side FFT of it."""
@@ -32,33 +26,35 @@ def extract_features(file_path, config):
     Returns flat array of features"""
     file_data = sio.loadmat(file_path)
     signals = [np.transpose(file_data[signal])[0] for signal in config['VARS']]
-    ffts = [get_fft(signal, config) for signal in signals]
-    signals.extend(ffts)
+    # ffts = [get_fft(signal, config) for signal in signals]
+    # signals.extend(ffts)
 
     features_list = []
     for signal in signals:
-        # signal = np.abs(signal)
+        signal_abs = np.abs(signal)
         # print(rms(signal))
         features_list.extend([
-            np.mean(signal),
-            np.median(signal),
+            np.mean(signal_abs),
+            np.median(signal_abs),
             np.std(signal),
             ss.skew(signal),
             ss.kurtosis(signal),
-            robust.mad(signal)
+            # robust.mad(signal)
         ])
     return features_list
 
-def get_signal_features(directory, config, exists=False, csvfilename=''):
+def get_signal_features(directory, config, exists=True, csvfilename='features.csv'):
     """Takes directory path, and two optional arguments.
     If exists if True, then features are taken from 'csvfilename' file
     Else features are computed from every *.mat file in directory
     Returns matrix of features"""
 
     if exists is False:
+        print("Extracting features from files")
         result = [extract_features(directory + item, config)
                   for item in os.listdir(directory)]
         u.save_features_to_file(result)
+        print("Extracting finished")
         return np.matrix(result)
     else:
         with open(csvfilename, 'r', newline='') as csvfile:

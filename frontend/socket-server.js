@@ -49,10 +49,10 @@ io.on('connection', socket => {
 
     socket.on('start_machine', () => {
         setTimeout(() => {
-            subprocess = 1;
-            // subprocess = cp.spawn('python3', [__dirname + '/../machine.py'], {detached: true});
-            // subprocess.unref();
-            // console.log(`Subprocess ID: ${subprocess.pid}`);
+            // subprocess = 1;
+            subprocess = cp.spawn('python3', [__dirname + '/../machine.py'], {detached: true});
+            subprocess.unref();
+            console.log(`Subprocess ID: ${subprocess.pid}`);
             socket.emit('start_machine_success');
         }, 2000);
         setTimeout(() => {
@@ -62,7 +62,7 @@ io.on('connection', socket => {
     })
 
     socket.on('stop_machine', () => {
-        // subprocess.kill();
+        subprocess.kill();
         subprocess = null;
         setTimeout(() => socket.emit('stop_machine_success'), 2000);
     })
@@ -84,14 +84,14 @@ server.listen(port, function () {
     console.log(`listening on *:${port}`);
 });
 
-// const fn = () => {
-//     if(subprocess)
-//         subprocess.kill();
-//     process.exit();
-// }
-// process.stdin.resume();
-// process.on("exit", fn);
-// process.on("SIGINT", fn);
-// process.on("SIGUSR1", fn);
-// process.on("SIGUSR2", fn);
-// process.on("uncaughtException", fn);
+const fn = () => {
+    if(subprocess)
+        subprocess.kill();
+    process.exit();
+}
+process.stdin.resume();
+process.on("exit", fn);
+process.on("SIGINT", fn);
+process.on("SIGUSR1", fn);
+process.on("SIGUSR2", fn);
+process.on("uncaughtException", fn);

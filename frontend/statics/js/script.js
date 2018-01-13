@@ -29,11 +29,12 @@ store.registerAction("stop_machine", function() {
 store.registerAction("toggle_machine_state", function() {
   machine_state = store.getState("machine_state");
   if(machine_state === "running"){
-      store.dispatch("stop_machine");
-    } else if(machine_state === "stopped") {
-      store.dispatch("start_machine");
-    }
-})
+    store.dispatch("stop_machine");
+  } else if(machine_state === "stopped") {
+    store.dispatch("start_machine");
+  }
+});
+
 
 $(document).ready(function () {
   u = Utilities();
@@ -101,14 +102,12 @@ function initSockets(u) {
     store.dispatch("change_tool_state", 1);
   });
 
-
   return socket;
 }
 
 
 
 function initEventListeners(u, socket) {
-
   $(".power-button").on('click', function () {
     store.dispatch("toggle_machine_state")
   });
@@ -176,48 +175,63 @@ function Store() {
   };
 }
 
+
 function machineStateReactor() {
   return [
     'machine_state',
     function(prop, action, newval, oldval) {
-      if(newval === "running") {
-        $(".power-button").addClass("on").removeClass("loading");
-        $('.machine-state-text').text("Wyłącz")
-      } else if (newval === "stopped") {
-        $(".power-button").removeClass("on").removeClass("loading");
-        $('.machine-state-text').text("Włącz")
-      } else if (newval === "waiting") {
-        $(".power-button").removeClass("on").addClass("loading");
-        if(oldval === "running") {
-          u.addLogRow(u.setColor("Stopping machine...", "yellow"));
-        } else if (oldval === "stopped") {
-          u.addLogRow(u.setColor("Setting up machine...", "yellow"));
-        }
+
+      switch(newval) {
+        case "running":
+          $(".power-button").addClass("on").removeClass("loading");
+          $('.machine-state-text').text("Wyłącz");
+          break;
+
+        case "stopped":
+          $(".power-button").removeClass("on").removeClass("loading");
+          $('.machine-state-text').text("Włącz");
+          break;
+
+        case "waiting":
+          $(".power-button").removeClass("on").addClass("loading");
+          if(oldval === "running")
+            u.addLogRow(u.setColor("Stopping machine...", "yellow"));
+          else if (oldval === "stopped")
+            u.addLogRow(u.setColor("Setting up machine...", "yellow"));
+          break;
       }
     }
   ];
 }
+
 
 function toolStateReactor() {
   return [
     'tool_state',
     function(prop, action, newval, oldval) {
       u.addLogRow("Changed tool state! New state: ");
-      if(newval === 1) {
-        u.addLogRow(u.setColor("Blunt", "red"), true);
-        $('.tool-status').removeClass("sharp").addClass("blunt");
-        $('.tool-status i').removeClass().addClass("far fa-times-circle");
-        $('.tool-state-text').text("Tępe");
-      } else if (newval === 0) {
-        u.addLogRow(u.setColor("Sharp", "green"), true);
-        $('.tool-status i').removeClass().addClass("far fa-check-circle");
-        $('.tool-status').removeClass("blunt").addClass("sharp");
-        $('.tool-state-text').text("Ostre");
-      } else if (newval === -1) {
-        u.addLogRow("N/A", true);
-        $('.tool-status i').removeClass().addClass("far fa-question-circle");
-        $('.tool-status').removeClass("blunt sharp");
-        $('.tool-state-text').text("N/A");
+
+      switch(newval) {
+        case 1:
+          u.addLogRow(u.setColor("Blunt", "red"), true);
+          $('.tool-status').removeClass("sharp").addClass("blunt");
+          $('.tool-status i').removeClass().addClass("far fa-times-circle");
+          $('.tool-state-text').text("Tępe");
+          break;
+
+        case 2:
+          u.addLogRow(u.setColor("Sharp", "green"), true);
+          $('.tool-status i').removeClass().addClass("far fa-check-circle");
+          $('.tool-status').removeClass("blunt").addClass("sharp");
+          $('.tool-state-text').text("Ostre");
+          break;
+
+        case -1:
+          u.addLogRow("N/A", true);
+          $('.tool-status i').removeClass().addClass("far fa-question-circle");
+          $('.tool-status').removeClass("blunt sharp");
+          $('.tool-state-text').text("N/A");
+          break;
       }
     }
   ];

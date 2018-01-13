@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Tool Sharpness Tester</title>
+    <link rel="stylesheet" href="/statics/libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/statics/libs/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/statics/css/styles.css">
+
+    <script src="/statics/libs/jquery/jquery-3.2.1.min.js"></script>
+    <script src="/statics/libs/socket.io/socket.io.slim.js"></script>
+    <script src="/statics/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/statics/js/watch.js"></script>
+    <script src="/statics/js/script.js"></script>
+</head>
+<body>
+    <div class="wrapper container">
+        <div class="row">
+            <div class="container statuses">
+                <div class="">
+                    <div class="machine-state col-lg-2">
+                        Stan maszyny:
+                        <div class="power-button">
+                            <i class="fas fa-power-off"></i>
+                        </div>
+                        <span class="machine-state-text">Włącz</span>maszynę
+                    </div>
+                    <div class="tool-state col-lg-2">
+                        Stan narzędzia:
+                        <div class="tool-status">
+                            <i class="far fa-question-circle"></i>
+                        </div>
+                        <span class="tool-state-text">N/A</span>
+                    </div>
+                </div>
+                <div class="buffer-state">
+                    <h3>
+                        Stan bufora:<br/>
+                        <span class="buffer-state-text">0</span>
+                        /16000 pomiarów
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row log-wrapper">
+            <h2>Dziennik zdarzeń:</h2>
+            <pre id="log"></pre>
+            <button id="test" class="btn btn-info">teścik</button>
+            <button id="clear-log" class="btn btn-info">Wyczyść dziennik</button>
+        </div>
+
+    </div>
+</body>
+</html>

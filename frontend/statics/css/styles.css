@@ -1,0 +1,123 @@
+@keyframes dashed-border {
+  0% { opacity: 1;  }
+  50% { opacity: 0; }
+  100% { opacity: 1;  }
+}
+
+
+.wrapper {
+  margin-top: 30px;
+}
+
+.machine-state, .tool-state {
+  float: right;
+  padding: 10px;
+  border: 1px solid #ececec;
+  border-radius: 1px;
+  text-align: center;
+  line-height: 1;
+  height: 160px;
+  margin: 0 3px;
+}
+
+.machine-state-text { font-weight: bold; display: block; }
+
+.power-button {
+  position: relative;
+  background: #FF3B1E;
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  margin: 10px auto;
+  border-radius: 50%;
+  transition: .2s box-shadow ease,
+              .5s background ease;
+  box-shadow: inset 0 0 35px  rgba(0,0,0,.3);
+}
+.power-button:after {
+  content: "";
+  position: absolute;
+  display: block;
+  top: -4px;
+  left: -4px;
+  bottom: -4px;
+  right: -4px;
+  border-radius: 50%;
+  border: 2px dashed rgba(0,0,0,.5);
+  opacity: 0;
+}
+
+.power-button:not(.on):after {
+  animation: dashed-border 3s ease-in-out infinite;
+}
+
+.power-button:hover {
+  box-shadow: inset 0 0 35px 0 rgba(0,0,0,.8);
+}
+
+.power-button > i {
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 18px;
+}
+
+.power-button.on {
+  background: green;
+}
+
+.power-button.loading {
+  background: rgb(214, 193, 49);
+}
+
+.tool-status {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  margin: 10px auto;
+  border-radius: 50%;
+  transition: 0.1s ease;
+}
+
+.tool-status > i {
+  position: absolute;
+  display:block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: gray;
+  font-size: 48px;
+}
+
+.tool-status.sharp i {
+  color: green;
+}
+
+.tool-status.blunt i {
+  color: red;
+}
+
+.buffer-state {
+  margin-top: 50px;
+}
+
+.log-wrapper {
+  width: 100%;
+  margin-top: 30px;
+}
+
+#log {
+  height: 300px;
+  width: 100%;
+  background: #fcfcfc;
+  border: 1px solid #e0e0e0;
+  overflow-y: scroll;
+  padding: 15px;
+  line-height: 1.2;
+  box-shadow: inset 0 13px 30px -20px rgba(0,0,0,.5);
+}
+
+#test, #clear-log { margin-right: 10px;  }

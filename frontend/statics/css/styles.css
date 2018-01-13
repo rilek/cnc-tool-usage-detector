@@ -47,7 +47,7 @@
   opacity: 0;
 }
 
-.power-button:not(.on):after {
+.power-button:not(.on):not(.loading):after {
   animation: dashed-border 3s ease-in-out infinite;
 }
 
@@ -71,6 +71,7 @@
 
 .power-button.loading {
   background: rgb(214, 193, 49);
+  pointer-events: none;
 }
 
 .tool-status {

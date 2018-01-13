@@ -63,7 +63,8 @@ function initSockets(u) {
     store.dispatch("change_tool_state", -1)
   });
 
-  socket.on('tmp_file_change', function () {
+  socket.on('tmp_file_change', function (data) {
+    console.log(data);
     u.addLogRow(u.setColor('Changed file', "yellow"));
   });
 
@@ -126,9 +127,9 @@ function initEventListeners(u, socket) {
 
 function Store() {
   var state = {
-    machine_state: "stopped",
-    tool_state: -1,
-    buffer_state: 0
+    machine_state: null,
+    tool_state: null,
+    buffer_state: null
   };
   var reactors = {};
   var actions = {};

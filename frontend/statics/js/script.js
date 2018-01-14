@@ -1,8 +1,13 @@
-store = Store();
+
+
+var store = Store();
 store.initReactors(
   machineStateReactor(),
   toolStateReactor()
 );
+
+var ssocket = $.Deferred();
+
 
 store.registerAction("new_state", function(state) {
   store.setState(state);
@@ -18,28 +23,44 @@ store.registerAction("change_machine_state", function(x) {
 
 store.registerAction("start_machine", function() {
   socket.emit('start_machine');
-  store.setState({machine_state: "waiting"})
+  // store.setState({machine_state: "waiting"})
 });
 
 store.registerAction("stop_machine", function() {
   socket.emit('stop_machine');
-  store.setState({machine_state: "waiting"});
+  // store.setState({machine_state: "waiting"});
 });
 
 store.registerAction("toggle_machine_state", function() {
   machine_state = store.getState("machine_state");
-  if(machine_state === "running"){
+  if(machine_state === "running")
     store.dispatch("stop_machine");
-  } else if(machine_state === "stopped") {
+  else if(machine_state === "stopped")
     store.dispatch("start_machine");
-  }
+});
+
+store.registerAction("log_history", function(logs) {
+  var $log = $('#log');
+  $log.html(logs + $log.html());
+  $log.scrollTop($log[0].scrollHeight);
+});
+
+store.registerAction("clear_logs", function() {
+  $('#log').html("");
+  socket.emit("clear_logs");
+});
+
+store.registerAction("add_log_row", function(rawText, color, omitLine) {
+  ssocket.promise().then(function(socket) {
+    socket.emit("add_log_row", rawText, color, omitLine);
+  })
 });
 
 
 $(document).ready(function () {
   u = Utilities();
 
-  u.addLogRow(" ==================== New Session ==================== ");
+  // u.addLogRow("==================== New Session ====================");
   socket = initSockets(u);
   initEventListeners(u, socket);
 });
@@ -48,49 +69,53 @@ $(document).ready(function () {
 
 function initSockets(u) {
   var socket = io.connect('http://' + document.domain + ':' + location.port);
+  ssocket.resolve(socket);
 
   socket.on('connect', function () {
     console.log("connected!");
-    u.addLogRow(u.setColor("Connected to server!", "green"));
+    // u.addLogRow("Client connected to server!", "green");
   });
 
   socket.on('connected', function(data) {
-    store.dispatch("new_state",data);
+    store.dispatch("new_state", data.state);
+    store.dispatch("log_history", data.log);
   });
 
   socket.on('disconnect', function () {
-    u.addLogRow(u.setColor('Disconnected', "red"));
+    // u.addLogRow('Client disconnected from server', "red");
     store.dispatch("change_machine_state", "stopped");
     store.dispatch("change_tool_state", -1)
   });
 
-  socket.on('tmp_file_change', function (data) {
-    console.log(data);
-    u.addLogRow(u.setColor('Changed file', "yellow"));
+  socket.on('tmp_file_change', function (name) {
   });
 
   socket.on('reload', function() {
     location.reload();
   });
 
+  socket.on('new_log', function(log) {
+    $log = $('#log');
+    $log.append(log);
+    $log.scrollTop($log[0].scrollHeight);
+  });
+
   socket.on('start_machine_success', function() {
-    u.addLogRow(u.setColor("Machine started!", "green"));
     store.dispatch("change_machine_state", "running");
   });
 
   socket.on('start_machine_fail', function() {
-    u.addLogRow(u.setColor("Machine failed to start!", "red"));
+    // u.addLogRow("Machine failed to start!", "red");
     store.dispatch("change_machine_state", "stopped");
   });
 
   socket.on('stop_machine_success', function() {
-    u.addLogRow(u.setColor("Machine stopped!", "green"));
     store.dispatch("change_machine_state", "stopped");
     store.dispatch("change_tool_state", -1);
   });
 
   socket.on('stop_machine_fail', function() {
-    u.addLogRow(u.setColor("Machine failed to stop!", "red"));
+    // u.addLogRow("Machine failed to stop!", "red");
     store.dispatch("change_machine_state", "running");
   });
 
@@ -109,16 +134,15 @@ function initSockets(u) {
 
 function initEventListeners(u, socket) {
   $(".power-button").on('click', function () {
-    store.dispatch("toggle_machine_state")
+    store.dispatch("toggle_machine_state");
   });
 
   $('#test').on("click", function() {
-    u.addLogRow("dupa");
+    // u.addLogRow("dupa");
   });
 
   $('#clear-log').on('click', function() {
-    $('#log').text('');
-    localStorage.setItem("log", "");
+    store.dispatch("clear_logs");
   });
 }
 
@@ -141,7 +165,7 @@ function Store() {
 
   watch(state, function(prop, action, newval, oldval) {
     if(oldval !== newval) {
-      _reactors = reactors[prop];
+      var _reactors = reactors[prop];
       if(Array.isArray(_reactors))
         _reactors.forEach(function(fn) {
           fn(prop,action,newval, oldval);
@@ -194,10 +218,6 @@ function machineStateReactor() {
 
         case "waiting":
           $(".power-button").removeClass("on").addClass("loading");
-          if(oldval === "running")
-            u.addLogRow(u.setColor("Stopping machine...", "yellow"));
-          else if (oldval === "stopped")
-            u.addLogRow(u.setColor("Setting up machine...", "yellow"));
           break;
       }
     }
@@ -209,25 +229,25 @@ function toolStateReactor() {
   return [
     'tool_state',
     function(prop, action, newval, oldval) {
-      u.addLogRow("Changed tool state! New state: ");
+      // u.addLogRow("Changed tool state! New state: ");
 
       switch(newval) {
         case 1:
-          u.addLogRow(u.setColor("Blunt", "red"), true);
+          // u.addLogRow("Blunt", "red", true);
           $('.tool-status').removeClass("sharp").addClass("blunt");
           $('.tool-status i').removeClass().addClass("far fa-times-circle");
           $('.tool-state-text').text("Tępe");
           break;
 
-        case 2:
-          u.addLogRow(u.setColor("Sharp", "green"), true);
+        case 0:
+          // u.addLogRow("Sharp", "green", true);
           $('.tool-status i').removeClass().addClass("far fa-check-circle");
           $('.tool-status').removeClass("blunt").addClass("sharp");
           $('.tool-state-text').text("Ostre");
           break;
 
         case -1:
-          u.addLogRow("N/A", true);
+          // u.addLogRow("N/A", "gray", true);
           $('.tool-status i').removeClass().addClass("far fa-question-circle");
           $('.tool-status').removeClass("blunt sharp");
           $('.tool-state-text').text("N/A");
@@ -255,16 +275,18 @@ function Utilities() {
     }}();
 
   var addLogRow = function() {
-    var $log = $('#log');
-    $log.html(localStorage.getItem("log"));
 
-    return function(text, omitLine) {
+    return function(rawText, color, omitLine) {
+      var $log = $('#log');
       var timestamp = omitLine !== true ? "[" + new Date().toISOString() + "]: " : "";
-      var linebreak = omitLine !== true ? "<br/>" : "";
+      var linebreak = omitLine !== true ? "\r\n" : "";
+      var coloredText = typeof color !== 'undefined' && color !== null ? setColor(rawText, color) : rawText;
+      var logRow = linebreak + (timestamp ? setColor(timestamp, "gray") : coloredText);
 
-      $log.append(linebreak, setColor(timestamp, "gray"), text);
+
+      $log.append(logRow);
       $log.scrollTop($log[0].scrollHeight);
-      localStorage.setItem("log", $log.html());
+      store.dispatch("add_log_row", rawText, color, omitLine);
       return true;
     }
   };

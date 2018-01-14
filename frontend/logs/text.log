@@ -1,0 +1,25 @@
+
+[2018-01-14T13:57:19.244Z]: Turning off the server, code: undefined
+
+[2018-01-14T13:57:25.611Z]: Setting up server
+[2018-01-14T13:57:25.668Z]: Listening on *:8081
+[2018-01-14T13:57:30.371Z]: New connection
+[2018-01-14T13:57:30.500Z]: New connection
+[2018-01-14T13:57:31.032Z]: New connection
+[2018-01-14T13:57:36.247Z]: New connection
+[2018-01-14T13:57:38.268Z]: Starting machine...
+[2018-01-14T13:57:40.294Z]: Subprocess ID: 5663
+[2018-01-14T13:57:40.294Z]: Machine started!
+[2018-01-14T13:57:41.483Z]: New file: /home/rafcio/DT/tmp_files/file_1515938261279.mat
+[2018-01-14T13:57:41.484Z]: New file: /home/rafcio/DT/tmp_files/file_1515938261279.mat
+[2018-01-14T13:57:41.484Z]: New file: /home/rafcio/DT/tmp_files/file_1515938261279.mat
+[2018-01-14T13:57:41.493Z]: New file: /home/rafcio/DT/tmp_files/file_1515938261279.mat
+[2018-01-14T13:57:46.486Z]: New file: /home/rafcio/DT/tmp_files/file_1515938266285.mat
+[2018-01-14T13:57:46.487Z]: New file: /home/rafcio/DT/tmp_files/file_1515938266285.mat
+[2018-01-14T13:57:46.487Z]: New file: /home/rafcio/DT/tmp_files/file_1515938266285.mat
+[2018-01-14T13:57:46.487Z]: New file: /home/rafcio/DT/tmp_files/file_1515938266285.mat
+[2018-01-14T13:57:50.666Z]: Killing subprocess: 5663
+[2018-01-14T13:57:50.666Z]: Stopping machine...
+[2018-01-14T13:57:52.671Z]: Subprocess killed
+[2018-01-14T13:57:52.671Z]: Machine stopped!
+[2018-01-14T14:06:49.568Z]: Turning off the server, code: undefined

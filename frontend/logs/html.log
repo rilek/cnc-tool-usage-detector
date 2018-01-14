@@ -1,0 +1,25 @@
+
+<span style="color: gray">[2018-01-14T13:57:19.244Z]: </span>Turning off the server, code: undefined
+
+<span style="color: gray">[2018-01-14T13:57:25.611Z]: </span>Setting up server
+<span style="color: gray">[2018-01-14T13:57:25.668Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-14T13:57:30.371Z]: </span>New connection
+<span style="color: gray">[2018-01-14T13:57:30.500Z]: </span>New connection
+<span style="color: gray">[2018-01-14T13:57:31.032Z]: </span>New connection
+<span style="color: gray">[2018-01-14T13:57:36.247Z]: </span>New connection
+<span style="color: gray">[2018-01-14T13:57:38.268Z]: </span><span style="color: rgb(214, 193, 49)">Starting machine...</span>
+<span style="color: gray">[2018-01-14T13:57:40.294Z]: </span>Subprocess ID: 5663
+<span style="color: gray">[2018-01-14T13:57:40.294Z]: </span><span style="color: green">Machine started!</span>
+<span style="color: gray">[2018-01-14T13:57:41.483Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938261279.mat</span>
+<span style="color: gray">[2018-01-14T13:57:41.484Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938261279.mat</span>
+<span style="color: gray">[2018-01-14T13:57:41.484Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938261279.mat</span>
+<span style="color: gray">[2018-01-14T13:57:41.493Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938261279.mat</span>
+<span style="color: gray">[2018-01-14T13:57:46.486Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938266285.mat</span>
+<span style="color: gray">[2018-01-14T13:57:46.487Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938266285.mat</span>
+<span style="color: gray">[2018-01-14T13:57:46.487Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938266285.mat</span>
+<span style="color: gray">[2018-01-14T13:57:46.487Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938266285.mat</span>
+<span style="color: gray">[2018-01-14T13:57:50.666Z]: </span>Killing subprocess: 5663
+<span style="color: gray">[2018-01-14T13:57:50.666Z]: </span><span style="color: rgb(214, 193, 49)">Stopping machine...</span>
+<span style="color: gray">[2018-01-14T13:57:52.671Z]: </span>Subprocess killed
+<span style="color: gray">[2018-01-14T13:57:52.671Z]: </span><span style="color: green">Machine stopped!</span>
+<span style="color: gray">[2018-01-14T14:06:49.568Z]: </span>Turning off the server, code: undefined

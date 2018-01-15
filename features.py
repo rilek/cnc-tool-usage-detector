@@ -55,11 +55,10 @@ def extract_features(file_path, config):
         # print(rms(signal))
         features_list.extend([
             np.mean(signal),
-            # np.median(signal),
+            np.median(signal),
             np.std(signal),
-            # ss.skew(signal),
-            ss.kurtosis(signal),
-            # robust.mad(signal)
+            ss.skew(signal),
+            ss.kurtosis(signal)
         ])
 
 
@@ -75,7 +74,8 @@ def extract_features(file_path, config):
             ss.skew(signal),
             np.sqrt(np.mean(signal**2)),
             ss.kurtosis(signal),
-            # robust.mad(signal)
+            np.var(signal),
+            np.ptp(signal)
         ])
 
         features_list_fft.extend([
@@ -85,7 +85,8 @@ def extract_features(file_path, config):
             ss.skew(peak),
             np.sqrt(np.mean(peak**2)),
             ss.kurtosis(peak),
-            # robust.mad(peak)
+            np.var(peak),
+            np.ptp(peak)
         ])
 
     return features_list + features_list_fft

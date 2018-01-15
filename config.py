@@ -21,13 +21,14 @@ CLASSIFIERS = [
     ["Naive Bayes", GaussianNB()],
     ["QDA", QuadraticDiscriminantAnalysis()]
 ]
+
 FS = 25000
 L = 16000
 T = 1/FS
 M = int(L/2)
 F = [2*FS*(x)/L for x in list(range(0, M))]
 
-TEST_CSV = False
+TEST_CSV = True
 # VER = ""
 # TRAIN_FILES_DIR = ('new_train/final_f/' + VER) if TEST_CSV is True else 'train/'
 # LAST_GOOD = 1892 if TEST_CSV is True else 552
@@ -40,7 +41,9 @@ CONFIG = {
     'VARS': ['AccXSignal', 'MicSignal'],
     'TMP_FILES_DIR': 'tmp_files/',
     'TRAIN_FILES_DIR': TRAIN_FILES_DIR,
+    'NEW_TRAIN_FILES_DIR': 'new_train/',
     'TRAIN_FILES_LAST_GOOD': LAST_GOOD,
+    'VER': VER,
     'TEST_CSV': TEST_CSV,
     'TRAIN_PERCENT': 0.9,
     'CLASSIFIERS': CLASSIFIERS,
@@ -52,8 +55,6 @@ CONFIG = {
     't': np.linspace(0.0, L*T, L),
     'm': M,
     'f': F,
-    'HertzIndex': F.index(next(i for i in F if i > 250)),
-    'HertzIndex_min': F.index(next(i for i in F if i > 150)),
-    'NEW_TRAIN_FILES_DIR': 'new_train/',
-    'VER': VER,
+    'HertzIndex': F.index(next(i for i in F if i > 500)),
+    'HertzIndex_min': F.index(next(i for i in F if i > 0)),
 }

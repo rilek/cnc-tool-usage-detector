@@ -8,5 +8,7 @@ build/
 new_train/
 logs/
 tmp_files/*
-npm-debug.log
+*.log
 package-lock.json
+model.pkl
+*.csv

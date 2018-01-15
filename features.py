@@ -55,11 +55,11 @@ def extract_features(file_path, config):
         signal_abs = np.abs(signal)
         # print(rms(signal))
         features_list.extend([
-            round(np.mean(signal),2),
+            np.mean(signal),
             # np.median(signal),
-            round(np.std(signal),2),
+            np.std(signal),
             # ss.skew(signal),
-            round(ss.kurtosis(signal),2),
+            ss.kurtosis(signal),
             # robust.mad(signal)
         ])
 
@@ -70,22 +70,22 @@ def extract_features(file_path, config):
         peak = signal[61-config['thousandHertsIndex_min']:68-config['thousandHertsIndex_min']]
 
         features_list_fft.extend([
-            round(np.mean(signal),2),
+            np.mean(signal),
             # np.median(signal),
-            round(np.std(signal),2),
+            np.std(signal),
             # ss.skew(signal),
-            round(np.sqrt(np.mean(signal**2)),2),
-            round(ss.kurtosis(signal),2),
+            np.sqrt(np.mean(signal**2)),
+            ss.kurtosis(signal),
             # robust.mad(signal)
         ])
 
         features_list_fft.extend([
-            round(np.mean(peak),2),
-            round(np.median(peak),2),
-            round(np.std(peak),2),
-            round(ss.skew(peak),2),
-            round(np.sqrt(np.mean(peak**2)),2),
-            round(ss.kurtosis(peak),2),
+            np.mean(peak),
+            np.median(peak),
+            np.std(peak),
+            ss.skew(peak),
+            np.sqrt(np.mean(peak**2)),
+            ss.kurtosis(peak),
             # robust.mad(peak)
         ])
 

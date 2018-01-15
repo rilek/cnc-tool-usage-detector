@@ -1,6 +1,7 @@
 .ipynb_checkpoints/
 .vscode/
 train/
+train_kopia/
 __pycache__/
 node_modules/
 tmp_files/*

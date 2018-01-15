@@ -4,4 +4,5 @@ train/
 __pycache__/
 node_modules/
 tmp_files/*
+new_train/
 npm-debug.log

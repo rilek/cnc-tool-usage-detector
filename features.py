@@ -3,10 +3,12 @@
 import os
 import csv
 import numpy as np
+import pandas as pd
 import scipy.io as sio
 import scipy.stats as ss
 from statsmodels import robust
 import utils as u
+import matplotlib.pyplot as plt
 
 
 def get_fft(arr, config):
@@ -17,37 +19,81 @@ def get_fft(arr, config):
     ds_spectrum = np.abs(data_fft/config['L'])
     ss_spectrum = 2*ds_spectrum[0:config['m']]
 
-    return ss_spectrum[0:config['thousandHertsIndex']]
+    return ss_spectrum[config['thousandHertsIndex_min']:config['thousandHertsIndex']]
 
 def extract_features(file_path, config):
     """Takes path to file with signals.
     Separate specifies signals.
     Computes Mean, Median, STD, Skew, Kurtosis and MAD for each one.
     Returns flat array of features"""
-    file_data = sio.loadmat(file_path)
-    signals = [np.transpose(file_data[signal])[0] for signal in config['VARS']]
-    # ffts = [get_fft(signal, config) for signal in signals]
+    if config['TEST_CSV']:
+        file_data = pd.read_csv(file_path, header=None)
+        signals = [file_data[0].tolist(), file_data[1].tolist()]
+    else:
+        file_data = sio.loadmat(file_path)
+        signals = [np.transpose(file_data[signal])[0] for signal in config['VARS']]
+
+
+    ffts = [get_fft(signal, config) for signal in signals]
     # signals.extend(ffts)
+
+
+    # print(file_path)
+
+    # print(config['thousandHertsIndex'])
+    # xf = 2*np.linspace(0.0, 1.0/(2.0*config['T']), config['L']/2)
+    # plt.plot(xf[61:68], ffts[1][61:68])
+    # plt.show()
+    # shown = True
 
     features_list = []
     for signal in signals:
         signal_abs = np.abs(signal)
         # print(rms(signal))
         features_list.extend([
-            np.mean(signal_abs),
-            np.median(signal_abs),
+            np.mean(signal),
+            # np.median(signal),
             np.std(signal),
-            ss.skew(signal),
+            # ss.skew(signal),
             ss.kurtosis(signal),
             # robust.mad(signal)
         ])
-    return features_list
+
+
+    features_list_fft = []
+    for signal in ffts:
+        # PEAK IDXS [61:68]
+        peak = signal[61-config['thousandHertsIndex_min']:68-config['thousandHertsIndex_min']]
+
+        features_list_fft.extend([
+            np.mean(signal),
+            # np.median(signal),
+            np.std(signal),
+            # ss.skew(signal),
+            np.sqrt(np.mean(signal**2)),
+            ss.kurtosis(signal),
+            # robust.mad(signal)
+        ])
+
+        features_list_fft.extend([
+            np.mean(peak),
+            np.median(peak),
+            np.std(peak),
+            ss.skew(peak),
+            np.sqrt(np.mean(peak**2)),
+            ss.kurtosis(peak),
+            # robust.mad(peak)
+        ])
+
+    return features_list + features_list_fft
+
 
 def get_signal_features(directory, config, exists=True, csvfilename='features.csv'):
     """Takes directory path, and two optional arguments.
     If exists if True, then features are taken from 'csvfilename' file
     Else features are computed from every *.mat file in directory
     Returns matrix of features"""
+
 
     if exists is False:
         print("Extracting features from files")

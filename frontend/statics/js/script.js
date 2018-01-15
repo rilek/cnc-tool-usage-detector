@@ -105,7 +105,6 @@ function initSockets(u) {
   });
 
   socket.on('start_machine_fail', function() {
-    // u.addLogRow("Machine failed to start!", "red");
     store.dispatch("change_machine_state", "stopped");
   });
 
@@ -115,7 +114,6 @@ function initSockets(u) {
   });
 
   socket.on('stop_machine_fail', function() {
-    // u.addLogRow("Machine failed to stop!", "red");
     store.dispatch("change_machine_state", "running");
   });
 
@@ -135,10 +133,6 @@ function initSockets(u) {
 function initEventListeners(u, socket) {
   $(".power-button").on('click', function () {
     store.dispatch("toggle_machine_state");
-  });
-
-  $('#test').on("click", function() {
-    // u.addLogRow("dupa");
   });
 
   $('#clear-log').on('click', function() {

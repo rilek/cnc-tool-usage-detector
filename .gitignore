@@ -4,6 +4,9 @@ train/
 train_kopia/
 __pycache__/
 node_modules/
-tmp_files/*
+build/
 new_train/
+logs/
+tmp_files/*
 npm-debug.log
+package-lock.json

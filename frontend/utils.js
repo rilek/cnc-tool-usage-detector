@@ -35,3 +35,11 @@ export const timeout = (ms) =>
 
 export const createTimestamp = () =>
   "[" + new Date().toISOString() + "]: ";
+
+export const getClassStr = (cls) => {
+  console.log(cls);
+  if(cls === 1)
+    return "Tępe";
+  else
+    return "Ostre";
+}

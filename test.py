@@ -1,5 +1,5 @@
 import sys
 
 
-print("dupa")
+print("asd " + sys.argv[1])
 sys.stdout.flush()

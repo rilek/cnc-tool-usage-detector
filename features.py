@@ -1,5 +1,6 @@
 """Features extraction module"""
 
+import sys
 import os
 import csv
 import numpy as np
@@ -9,6 +10,9 @@ import scipy.stats as ss
 from statsmodels import robust
 import utils as u
 import matplotlib.pyplot as plt
+import json
+import collections
+from config import CONFIG as c
 
 
 def get_fft(arr, config):
@@ -51,11 +55,11 @@ def extract_features(file_path, config):
         signal_abs = np.abs(signal)
         # print(rms(signal))
         features_list.extend([
-            np.mean(signal),
+            round(np.mean(signal),2),
             # np.median(signal),
-            np.std(signal),
+            round(np.std(signal),2),
             # ss.skew(signal),
-            ss.kurtosis(signal),
+            round(ss.kurtosis(signal),2),
             # robust.mad(signal)
         ])
 
@@ -66,22 +70,22 @@ def extract_features(file_path, config):
         peak = signal[61-config['thousandHertsIndex_min']:68-config['thousandHertsIndex_min']]
 
         features_list_fft.extend([
-            np.mean(signal),
+            round(np.mean(signal),2),
             # np.median(signal),
-            np.std(signal),
+            round(np.std(signal),2),
             # ss.skew(signal),
-            np.sqrt(np.mean(signal**2)),
-            ss.kurtosis(signal),
+            round(np.sqrt(np.mean(signal**2)),2),
+            round(ss.kurtosis(signal),2),
             # robust.mad(signal)
         ])
 
         features_list_fft.extend([
-            np.mean(peak),
-            np.median(peak),
-            np.std(peak),
-            ss.skew(peak),
-            np.sqrt(np.mean(peak**2)),
-            ss.kurtosis(peak),
+            round(np.mean(peak),2),
+            round(np.median(peak),2),
+            round(np.std(peak),2),
+            round(ss.skew(peak),2),
+            round(np.sqrt(np.mean(peak**2)),2),
+            round(ss.kurtosis(peak),2),
             # robust.mad(peak)
         ])
 
@@ -107,3 +111,19 @@ def get_signal_features(directory, config, exists=True, csvfilename='features.cs
             reader = csv.reader(csvfile, delimiter=',')
             result = [np.array([float(i) for i in row]) for row in reader]
             return np.matrix(result)
+
+# if __name__ == "__main__":
+#     if len(sys.argv) > 1:
+#         args = sys.argv[1:]
+#         _dir = args[0]
+#         dt = {}
+#         np.set_printoptions(threshold=sys.maxsize)
+#         ft = extract_features(_dir, c)
+#         pred_cls = "2"
+#         if _dir.split("/")[-1].startswith("Tepe"):
+#             pred_cls = "1"
+#         elif _dir.split("/")[-1].startswith("Ostre"):
+#             pred_cls = "0"
+
+#         print('{"features":' + str(ft) + ', "class": '+ pred_cls  + '}')
+#         sys.stdout.flush()

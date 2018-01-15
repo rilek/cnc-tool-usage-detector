@@ -1,28 +1,253 @@
 
-<span style="color: gray">[2018-01-14T13:57:19.244Z]: </span>Turning off the server, code: undefined
+<span style="color: gray">[2018-01-15T08:14:06.121Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:14:09.481Z]: </span><span style="color: rgb(214, 193, 49)">Starting machine...</span>
+<span style="color: gray">[2018-01-15T08:14:11.497Z]: </span>Subprocess ID: 16762
+<span style="color: gray">[2018-01-15T08:14:11.499Z]: </span><span style="color: green">Machine started!</span>
+<span style="color: gray">[2018-01-15T08:14:12.903Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_130.mat</span>
+<span style="color: gray">[2018-01-15T08:14:12.924Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_130.mat</span>
+<span style="color: gray">[2018-01-15T08:14:15.129Z]: </span>Turning off the server, code: ReferenceError: addLogRog is not defined
 
-<span style="color: gray">[2018-01-14T13:57:25.611Z]: </span>Setting up server
-<span style="color: gray">[2018-01-14T13:57:25.668Z]: </span>Listening on *:8081
-<span style="color: gray">[2018-01-14T13:57:30.371Z]: </span>New connection
-<span style="color: gray">[2018-01-14T13:57:30.500Z]: </span>New connection
-<span style="color: gray">[2018-01-14T13:57:31.032Z]: </span>New connection
-<span style="color: gray">[2018-01-14T13:57:36.247Z]: </span>New connection
-<span style="color: gray">[2018-01-14T13:57:38.268Z]: </span><span style="color: rgb(214, 193, 49)">Starting machine...</span>
-<span style="color: gray">[2018-01-14T13:57:40.294Z]: </span>Subprocess ID: 5663
-<span style="color: gray">[2018-01-14T13:57:40.294Z]: </span><span style="color: green">Machine started!</span>
-<span style="color: gray">[2018-01-14T13:57:41.483Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938261279.mat</span>
-<span style="color: gray">[2018-01-14T13:57:41.484Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938261279.mat</span>
-<span style="color: gray">[2018-01-14T13:57:41.484Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938261279.mat</span>
-<span style="color: gray">[2018-01-14T13:57:41.493Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938261279.mat</span>
-<span style="color: gray">[2018-01-14T13:57:46.486Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938266285.mat</span>
-<span style="color: gray">[2018-01-14T13:57:46.487Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938266285.mat</span>
-<span style="color: gray">[2018-01-14T13:57:46.487Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938266285.mat</span>
-<span style="color: gray">[2018-01-14T13:57:46.487Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/file_1515938266285.mat</span>
-<span style="color: gray">[2018-01-14T13:57:50.666Z]: </span>Killing subprocess: 5663
-<span style="color: gray">[2018-01-14T13:57:50.666Z]: </span><span style="color: rgb(214, 193, 49)">Stopping machine...</span>
-<span style="color: gray">[2018-01-14T13:57:52.671Z]: </span>Subprocess killed
-<span style="color: gray">[2018-01-14T13:57:52.671Z]: </span><span style="color: green">Machine stopped!</span>
-<span style="color: gray">[2018-01-14T14:06:49.568Z]: </span>Turning off the server, code: undefined
+<span style="color: gray">[2018-01-15T08:16:36.269Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:16:36.361Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:16:38.083Z]: </span>Turning off the server, code: ReferenceError: addLogRog is not defined
 
-<span style="color: gray">[2018-01-15T04:49:10.687Z]: </span>Setting up server
-<span style="color: gray">[2018-01-15T04:49:10.710Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:17:26.263Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:17:26.334Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:17:27.993Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:17:28.103Z]: </span>Turning off the server, code: ReferenceError: addLogRog is not defined
+
+<span style="color: gray">[2018-01-15T08:18:19.673Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:18:19.730Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:18:21.464Z]: </span>Turning off the server, code: SyntaxError: Unexpected end of JSON input
+
+<span style="color: gray">[2018-01-15T08:18:50.045Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:18:50.098Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:18:52.990Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:19:17.184Z]: </span>Turning off the server, code: SIGINT
+
+<span style="color: gray">[2018-01-15T08:19:20.368Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:19:20.417Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:19:22.988Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:19:26.980Z]: </span>Turning off the server, code: SIGINT
+
+<span style="color: gray">[2018-01-15T08:19:38.811Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:19:38.892Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:19:43.988Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:19:55.022Z]: </span>Turning off the server, code: SIGINT
+
+<span style="color: gray">[2018-01-15T08:19:58.682Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:19:58.773Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:20:00.020Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:20:22.231Z]: </span>Turning off the server, code: SIGINT
+
+<span style="color: gray">[2018-01-15T08:20:25.764Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:20:25.800Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:20:27.991Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:20:34.941Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:20:45.312Z]: </span><span style="color: rgb(214, 193, 49)">Starting machine...</span>
+<span style="color: gray">[2018-01-15T08:20:47.340Z]: </span>Subprocess ID: 17604
+<span style="color: gray">[2018-01-15T08:20:47.342Z]: </span><span style="color: green">Machine started!</span>
+<span style="color: gray">[2018-01-15T08:20:48.714Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe1_146.mat</span>
+<span style="color: gray">[2018-01-15T08:20:48.733Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe1_146.mat</span>
+<span style="color: gray">[2018-01-15T08:20:50.787Z]: </span>Turning off the server, code: ReferenceError: addLogRog is not defined
+
+<span style="color: gray">[2018-01-15T08:21:16.418Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:21:16.487Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:21:18.665Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:21:20.235Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:21:22.441Z]: </span><span style="color: rgb(214, 193, 49)">Starting machine...</span>
+<span style="color: gray">[2018-01-15T08:21:24.472Z]: </span>Subprocess ID: 17686
+<span style="color: gray">[2018-01-15T08:21:24.473Z]: </span><span style="color: green">Machine started!</span>
+<span style="color: gray">[2018-01-15T08:21:25.772Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe1_214.mat</span>
+<span style="color: gray">[2018-01-15T08:21:25.798Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe1_214.mat</span>
+<span style="color: gray">[2018-01-15T08:21:27.881Z]: </span>Real Class: 
+<span style="color: gray">[2018-01-15T08:22:08.221Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:22:08.273Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:22:09.077Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:22:11.817Z]: </span><span style="color: rgb(214, 193, 49)">Starting machine...</span>
+<span style="color: gray">[2018-01-15T08:22:13.848Z]: </span>Subprocess ID: 17776
+<span style="color: gray">[2018-01-15T08:22:13.849Z]: </span><span style="color: green">Machine started!</span>
+<span style="color: gray">[2018-01-15T08:22:15.168Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre2_183.mat</span>
+<span style="color: gray">[2018-01-15T08:22:16.919Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:22:20.173Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_162.mat</span>
+<span style="color: gray">[2018-01-15T08:22:21.781Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:22:25.175Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe1_162.mat</span>
+<span style="color: gray">[2018-01-15T08:22:26.826Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:22:30.182Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre3_238.mat</span>
+<span style="color: gray">[2018-01-15T08:22:31.888Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:22:35.188Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_222.mat</span>
+<span style="color: gray">[2018-01-15T08:22:35.517Z]: </span>Killing subprocess: 17776
+<span style="color: gray">[2018-01-15T08:22:35.518Z]: </span><span style="color: rgb(214, 193, 49)">Stopping machine...</span>
+<span style="color: gray">[2018-01-15T08:22:37.256Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:22:37.521Z]: </span>Subprocess killed
+<span style="color: gray">[2018-01-15T08:22:37.522Z]: </span><span style="color: green">Machine stopped!</span>
+<span style="color: gray">[2018-01-15T08:23:16.632Z]: </span><span style="color: rgb(214, 193, 49)">Starting machine...</span>
+<span style="color: gray">[2018-01-15T08:23:18.643Z]: </span>Subprocess ID: 17859
+<span style="color: gray">[2018-01-15T08:23:18.644Z]: </span><span style="color: green">Machine started!</span>
+<span style="color: gray">[2018-01-15T08:23:20.040Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre3_188.mat</span>
+<span style="color: gray">[2018-01-15T08:23:21.716Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:23:25.047Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre3_267.mat</span>
+<span style="color: gray">[2018-01-15T08:23:26.702Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:23:30.051Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_391.mat</span>
+<span style="color: gray">[2018-01-15T08:23:31.699Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:23:35.058Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_259.mat</span>
+<span style="color: gray">[2018-01-15T08:23:36.789Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:23:40.063Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre1_268.mat</span>
+<span style="color: gray">[2018-01-15T08:23:41.722Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:23:45.072Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_448.mat</span>
+<span style="color: gray">[2018-01-15T08:23:46.732Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:23:50.076Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe1_220.mat</span>
+<span style="color: gray">[2018-01-15T08:23:51.694Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:23:53.190Z]: </span>Killing subprocess: 17859
+<span style="color: gray">[2018-01-15T08:23:53.190Z]: </span><span style="color: rgb(214, 193, 49)">Stopping machine...</span>
+<span style="color: gray">[2018-01-15T08:23:55.191Z]: </span>Subprocess killed
+<span style="color: gray">[2018-01-15T08:23:55.191Z]: </span><span style="color: green">Machine stopped!</span>
+<span style="color: gray">[2018-01-15T08:24:23.728Z]: </span>Turning off the server, code: SIGINT
+
+<span style="color: gray">[2018-01-15T08:24:29.111Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:24:29.179Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:24:31.879Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:24:39.008Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:24:42.055Z]: </span><span style="color: rgb(214, 193, 49)">Starting machine...</span>
+<span style="color: gray">[2018-01-15T08:24:44.072Z]: </span>Subprocess ID: 18052
+<span style="color: gray">[2018-01-15T08:24:44.073Z]: </span><span style="color: green">Machine started!</span>
+<span style="color: gray">[2018-01-15T08:24:45.457Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre1_241.mat</span>
+<span style="color: gray">[2018-01-15T08:24:45.479Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre1_241.mat</span>
+<span style="color: gray">[2018-01-15T08:24:47.520Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:24:47.623Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:24:50.428Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre2_206.mat</span>
+<span style="color: gray">[2018-01-15T08:24:50.450Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre2_206.mat</span>
+<span style="color: gray">[2018-01-15T08:24:52.407Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:24:52.533Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:24:55.431Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_310.mat</span>
+<span style="color: gray">[2018-01-15T08:24:55.439Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_310.mat</span>
+<span style="color: gray">[2018-01-15T08:24:57.418Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:24:57.504Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:24:58.815Z]: </span>Killing subprocess: 18052
+<span style="color: gray">[2018-01-15T08:24:58.816Z]: </span><span style="color: rgb(214, 193, 49)">Stopping machine...</span>
+<span style="color: gray">[2018-01-15T08:25:00.821Z]: </span>Subprocess killed
+<span style="color: gray">[2018-01-15T08:25:00.822Z]: </span><span style="color: green">Machine stopped!</span>
+<span style="color: gray">[2018-01-15T08:25:15.028Z]: </span>Turning off the server, code: SIGINT
+
+<span style="color: gray">[2018-01-15T08:25:20.049Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:25:20.105Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:25:21.920Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:25:25.163Z]: </span><span style="color: rgb(214, 193, 49)">Starting machine...</span>
+<span style="color: gray">[2018-01-15T08:25:27.181Z]: </span>Subprocess ID: 18177
+<span style="color: gray">[2018-01-15T08:25:27.185Z]: </span><span style="color: green">Machine started!</span>
+<span style="color: gray">[2018-01-15T08:25:28.558Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe1_102.mat</span>
+<span style="color: gray">[2018-01-15T08:25:30.308Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:25:33.557Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe3_208.mat</span>
+<span style="color: gray">[2018-01-15T08:25:35.209Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:25:38.564Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_478.mat</span>
+<span style="color: gray">[2018-01-15T08:25:39.880Z]: </span>Killing subprocess: 18177
+<span style="color: gray">[2018-01-15T08:25:39.881Z]: </span><span style="color: rgb(214, 193, 49)">Stopping machine...</span>
+<span style="color: gray">[2018-01-15T08:25:40.490Z]: </span>Real Class: OstrePredicted class: Ostre
+<span style="color: gray">[2018-01-15T08:25:41.886Z]: </span>Subprocess killed
+<span style="color: gray">[2018-01-15T08:25:41.887Z]: </span><span style="color: green">Machine stopped!</span>
+<span style="color: gray">[2018-01-15T08:26:14.810Z]: </span>Turning off the server, code: SIGINT
+
+<span style="color: gray">[2018-01-15T08:27:00.138Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:27:00.220Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:27:03.612Z]: </span>Turning off the server, code: SIGINT
+
+<span style="color: gray">[2018-01-15T08:27:44.399Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:27:44.454Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:27:45.042Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:27:46.441Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:27:51.320Z]: </span><span style="color: rgb(214, 193, 49)">Starting machine...</span>
+<span style="color: gray">[2018-01-15T08:27:53.351Z]: </span>Subprocess ID: 18410
+<span style="color: gray">[2018-01-15T08:27:53.353Z]: </span><span style="color: green">Machine started!</span>
+<span style="color: gray">[2018-01-15T08:27:54.711Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_381.mat</span>
+<span style="color: gray">[2018-01-15T08:27:54.727Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_381.mat</span>
+<span style="color: gray">[2018-01-15T08:27:56.722Z]: </span>Real Class: 0. Predicted class: 0
+<span style="color: gray">[2018-01-15T08:27:57.019Z]: </span>Real Class: 0. Predicted class: 0
+<span style="color: gray">[2018-01-15T08:27:59.715Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_223.mat</span>
+<span style="color: gray">[2018-01-15T08:27:59.728Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_223.mat</span>
+<span style="color: gray">[2018-01-15T08:28:01.932Z]: </span>Real Class: 0. Predicted class: 0
+<span style="color: gray">[2018-01-15T08:28:01.998Z]: </span>Real Class: 0. Predicted class: 0
+<span style="color: gray">[2018-01-15T08:28:04.717Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_335.mat</span>
+<span style="color: gray">[2018-01-15T08:28:04.724Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_335.mat</span>
+<span style="color: gray">[2018-01-15T08:28:06.596Z]: </span>Real Class: 0. Predicted class: 0
+<span style="color: gray">[2018-01-15T08:28:06.829Z]: </span>Real Class: 0. Predicted class: 0
+<span style="color: gray">[2018-01-15T08:28:09.723Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe3_180.mat</span>
+<span style="color: gray">[2018-01-15T08:28:09.739Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe3_180.mat</span>
+<span style="color: gray">[2018-01-15T08:28:11.924Z]: </span>Real Class: 0. Predicted class: 0
+<span style="color: gray">[2018-01-15T08:28:11.971Z]: </span>Killing subprocess: 18410
+<span style="color: gray">[2018-01-15T08:28:11.972Z]: </span><span style="color: rgb(214, 193, 49)">Stopping machine...</span>
+<span style="color: gray">[2018-01-15T08:28:12.273Z]: </span>Real Class: 0. Predicted class: 0
+<span style="color: gray">[2018-01-15T08:28:13.409Z]: </span>Turning off the server, code: SIGINT
+
+<span style="color: gray">[2018-01-15T08:28:56.506Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:28:56.555Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:29:01.796Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:29:04.216Z]: </span><span style="color: rgb(214, 193, 49)">Starting machine...</span>
+<span style="color: gray">[2018-01-15T08:29:06.242Z]: </span>Subprocess ID: 18569
+<span style="color: gray">[2018-01-15T08:29:06.243Z]: </span><span style="color: green">Machine started!</span>
+<span style="color: gray">[2018-01-15T08:29:07.669Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_397.mat</span>
+<span style="color: gray">[2018-01-15T08:29:09.417Z]: </span>Real Class: 0. Predicted class: 0
+<span style="color: gray">[2018-01-15T08:29:12.669Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre2_246.mat</span>
+<span style="color: gray">[2018-01-15T08:29:14.335Z]: </span>Real Class: 0. Predicted class: 0
+<span style="color: gray">[2018-01-15T08:29:17.675Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_33.mat</span>
+<span style="color: gray">[2018-01-15T08:29:19.343Z]: </span>Real Class: 0. Predicted class: 0
+<span style="color: gray">[2018-01-15T08:29:20.400Z]: </span>Killing subprocess: 18569
+<span style="color: gray">[2018-01-15T08:29:20.401Z]: </span><span style="color: rgb(214, 193, 49)">Stopping machine...</span>
+<span style="color: gray">[2018-01-15T08:29:22.401Z]: </span>Subprocess killed
+<span style="color: gray">[2018-01-15T08:29:22.403Z]: </span><span style="color: green">Machine stopped!</span>
+<span style="color: gray">[2018-01-15T08:29:49.135Z]: </span>Turning off the server, code: SIGINT
+
+<span style="color: gray">[2018-01-15T08:29:54.353Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:29:54.407Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:29:58.161Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:30:03.257Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:30:05.853Z]: </span><span style="color: rgb(214, 193, 49)">Starting machine...</span>
+<span style="color: gray">[2018-01-15T08:30:07.876Z]: </span>Subprocess ID: 18717
+<span style="color: gray">[2018-01-15T08:30:07.877Z]: </span><span style="color: green">Machine started!</span>
+<span style="color: gray">[2018-01-15T08:30:09.222Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_434.mat</span>
+<span style="color: gray">[2018-01-15T08:30:09.239Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_434.mat</span>
+<span style="color: gray">[2018-01-15T08:30:14.229Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre3_114.mat</span>
+<span style="color: gray">[2018-01-15T08:30:14.257Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre3_114.mat</span>
+<span style="color: gray">[2018-01-15T08:30:19.238Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_176.mat</span>
+<span style="color: gray">[2018-01-15T08:30:19.245Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_176.mat</span>
+<span style="color: gray">[2018-01-15T08:30:22.465Z]: </span>Killing subprocess: 18717
+<span style="color: gray">[2018-01-15T08:30:22.465Z]: </span><span style="color: rgb(214, 193, 49)">Stopping machine...</span>
+<span style="color: gray">[2018-01-15T08:30:24.467Z]: </span>Subprocess killed
+<span style="color: gray">[2018-01-15T08:30:24.468Z]: </span><span style="color: green">Machine stopped!</span>
+<span style="color: gray">[2018-01-15T08:31:20.021Z]: </span>Turning off the server, code: SIGINT
+
+<span style="color: gray">[2018-01-15T08:31:25.007Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:31:25.060Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:31:27.983Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:31:28.300Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:31:30.768Z]: </span><span style="color: rgb(214, 193, 49)">Starting machine...</span>
+<span style="color: gray">[2018-01-15T08:31:32.795Z]: </span>Subprocess ID: 18843
+<span style="color: gray">[2018-01-15T08:31:32.815Z]: </span><span style="color: green">Machine started!</span>
+<span style="color: gray">[2018-01-15T08:31:34.128Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_27.mat</span>
+<span style="color: gray">[2018-01-15T08:31:34.148Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe2_27.mat</span>
+<span style="color: gray">[2018-01-15T08:31:39.134Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre1_173.mat</span>
+<span style="color: gray">[2018-01-15T08:31:39.154Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre1_173.mat</span>
+<span style="color: gray">[2018-01-15T08:31:44.137Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre1_187.mat</span>
+<span style="color: gray">[2018-01-15T08:31:44.157Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre1_187.mat</span>
+<span style="color: gray">[2018-01-15T08:31:45.011Z]: </span>Killing subprocess: 18843
+<span style="color: gray">[2018-01-15T08:31:45.011Z]: </span><span style="color: rgb(214, 193, 49)">Stopping machine...</span>
+<span style="color: gray">[2018-01-15T08:31:47.020Z]: </span>Subprocess killed
+<span style="color: gray">[2018-01-15T08:31:47.020Z]: </span><span style="color: green">Machine stopped!</span>
+<span style="color: gray">[2018-01-15T08:32:43.269Z]: </span>Turning off the server, code: SIGINT
+
+<span style="color: gray">[2018-01-15T08:32:47.876Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T08:32:47.953Z]: </span>Listening on *:8081
+<span style="color: gray">[2018-01-15T08:32:49.697Z]: </span>New connection
+<span style="color: gray">[2018-01-15T08:33:33.975Z]: </span><span style="color: rgb(214, 193, 49)">Starting machine...</span>
+<span style="color: gray">[2018-01-15T08:33:35.994Z]: </span>Subprocess ID: 19083
+<span style="color: gray">[2018-01-15T08:33:35.995Z]: </span><span style="color: green">Machine started!</span>
+<span style="color: gray">[2018-01-15T08:33:37.354Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre3_130.mat</span>
+<span style="color: gray">[2018-01-15T08:33:39.128Z]: </span>Real Class: 0. Predicted class: 0
+<span style="color: gray">[2018-01-15T08:33:42.365Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Tepe1_107.mat</span>
+<span style="color: gray">[2018-01-15T08:33:44.070Z]: </span>Real Class: 0. Predicted class: 0
+<span style="color: gray">[2018-01-15T08:33:47.373Z]: </span>New file: <span style="color: rgb(214, 193, 49)">/home/rafcio/DT/tmp_files/Ostre1_209.mat</span>
+<span style="color: gray">[2018-01-15T08:33:48.988Z]: </span>Real Class: 0. Predicted class: 0
+<span style="color: gray">[2018-01-15T08:33:50.231Z]: </span>Killing subprocess: 19083
+<span style="color: gray">[2018-01-15T08:33:50.231Z]: </span><span style="color: rgb(214, 193, 49)">Stopping machine...</span>
+<span style="color: gray">[2018-01-15T08:33:52.236Z]: </span>Subprocess killed
+<span style="color: gray">[2018-01-15T08:33:52.237Z]: </span><span style="color: green">Machine stopped!</span>
+<span style="color: gray">[2018-01-15T08:42:28.533Z]: </span>Turning off the server, code: SIGINT

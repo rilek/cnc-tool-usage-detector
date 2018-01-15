@@ -4,7 +4,7 @@ import numpy as np
 import sklearn.metrics as metrics
 from sklearn.model_selection import train_test_split
 from sklearn.externals import joblib
-from colorama import init, Fore, Back, Style
+from colorama import init
 import features
 import utils as u
 from config import CONFIG as c
@@ -16,10 +16,9 @@ def test_classifiers(classifiers, config, model_filename='model.pkl'):
     Tests each classifier, its score is printed.
     Best one is printed with score ans saved to 'model_filename' file """
 
-    train_files_dir = config['CSV_TRAIN_FILES_DIR'] if config['TEST_CSV'] else config['TRAIN_FILES_DIR']
-    x_data = features.get_signal_features(train_files_dir, config, config['EXISTS'], 'features2.csv')
-    y_data = np.matrix([0]*config['TRAIN_FILES_LAST_GOOD'] + \
-                       [1]*(x_data.shape[0] - config['TRAIN_FILES_LAST_GOOD']))
+    last_good = config['TRAIN_FILES_LAST_GOOD']
+    x_data = features.get_signal_features(config['TRAIN_FILES_DIR'], config, config['EXISTS'], config['FEATURES_FILE'])
+    y_data = np.matrix([0]*last_good + [1]*(x_data.shape[0] - last_good))
 
     data = np.hstack((x_data, np.transpose(y_data)))
 
@@ -46,15 +45,15 @@ def test_classifiers(classifiers, config, model_filename='model.pkl'):
 
 
 
-        u.pprint("\n{}.{}:".format(n, name), 'yellow')
-        print("Score: {}%".format(round(score*100, 2)))
-        print("False Alarm Rate: {}%".format(round(fp/(tn+fp)*100, 2)))
-        print("AUC: {}".format(round(auc, 2)))
-        print("Report: ")
-        print(metrics.classification_report(y_test, np.matrix(y_pred),
-                                            target_names=['Tępe', 'Ostre']))
-        print("Confusion matrix:")
-        u.print_cm(cm, ["Tępe", "Ostre"])
+        # u.pprint("\n{}.{}:".format(n, name), 'yellow')
+        # print("Score: {}%".format(round(score*100, 2)))
+        # print("False Alarm Rate: {}%".format(round(fp/(tn+fp)*100, 2)))
+        # print("AUC: {}".format(round(auc, 2)))
+        # print("Report: ")
+        # print(metrics.classification_report(y_test, np.matrix(y_pred),
+        #                                     target_names=['Tępe', 'Ostre']))
+        # print("Confusion matrix:")
+        # u.print_cm(cm, ["Tępe", "Ostre"])
 
         models.append([clf, name, score, n])
 

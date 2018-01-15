@@ -2,7 +2,7 @@
 
 import csv
 from sklearn.externals import joblib
-from colorama import init, Fore, Back, Style
+from colorama import init, Fore, Style
 
 init()
 
@@ -10,7 +10,7 @@ def save_features_to_file(features, for_excel=False):
     """Takes matrix of features extracted from training set.
     Saves it to 'features.csv' file"""
 
-    with open("features.csv", "w", newline='') as csvfile:
+    with open("features.csv", "w+", newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=',')
 
         # Required for Excel to handle separator properly
@@ -58,6 +58,7 @@ def print_model_score(name, score, n):
 
 def print_cm(cm, labels, hide_zeroes=False, hide_diagonal=False, hide_threshold=None):
     """pretty print for confusion matrixes"""
+
     columnwidth = max([len(x) for x in labels] + [5])  # 5 is value length
     empty_cell = " " * columnwidth
     # Print header

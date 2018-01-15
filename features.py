@@ -23,7 +23,7 @@ def get_fft(arr, config):
     ds_spectrum = np.abs(data_fft/config['L'])
     ss_spectrum = 2*ds_spectrum[0:config['m']]
 
-    return ss_spectrum[config['thousandHertsIndex_min']:config['thousandHertsIndex']]
+    return ss_spectrum[config['HertzIndex_min']:config['HertzIndex']]
 
 def extract_features(file_path, config):
     """Takes path to file with signals.
@@ -44,7 +44,7 @@ def extract_features(file_path, config):
 
     # print(file_path)
 
-    # print(config['thousandHertsIndex'])
+    # print(config['HertzIndex'])
     # xf = 2*np.linspace(0.0, 1.0/(2.0*config['T']), config['L']/2)
     # plt.plot(xf[61:68], ffts[1][61:68])
     # plt.show()
@@ -52,7 +52,6 @@ def extract_features(file_path, config):
 
     features_list = []
     for signal in signals:
-        signal_abs = np.abs(signal)
         # print(rms(signal))
         features_list.extend([
             np.mean(signal),
@@ -67,13 +66,13 @@ def extract_features(file_path, config):
     features_list_fft = []
     for signal in ffts:
         # PEAK IDXS [61:68]
-        peak = signal[61-config['thousandHertsIndex_min']:68-config['thousandHertsIndex_min']]
+        peak = signal[61-config['HertzIndex_min']:68-config['HertzIndex_min']]
 
         features_list_fft.extend([
             np.mean(signal),
             # np.median(signal),
             np.std(signal),
-            # ss.skew(signal),
+            ss.skew(signal),
             np.sqrt(np.mean(signal**2)),
             ss.kurtosis(signal),
             # robust.mad(signal)

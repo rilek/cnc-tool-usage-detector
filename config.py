@@ -32,6 +32,7 @@ VER = "v1"
 CONFIG = {
     'VARS': ['AccXSignal', 'VelZSignal', 'AccXSignal1', 'MicSignal'],
     # 'VARS': ['AccXSignal', 'MicSignal'],
+    'TMP_FILES_DIR': 'tmp_files/',
     'TRAIN_FILES_DIR': 'train/',
     'TRAIN_FILES_LAST_GOOD': 552,
     'CSV_TRAIN_FILES_DIR': 'new_train/final/v1/',
@@ -49,5 +50,5 @@ CONFIG = {
     'thousandHertsIndex': F.index(next(i for i in F if i > 250)),
     'thousandHertsIndex_min': F.index(next(i for i in F if i > 150)),
     'NEW_TRAIN_FILES_DIR': 'new_train/',
-    'VER': 'v1/'
+    'VER': 'v1/',
 }

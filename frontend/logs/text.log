@@ -23,3 +23,6 @@
 [2018-01-14T13:57:52.671Z]: Subprocess killed
 [2018-01-14T13:57:52.671Z]: Machine stopped!
 [2018-01-14T14:06:49.568Z]: Turning off the server, code: undefined
+
+[2018-01-15T04:49:10.687Z]: Setting up server
+[2018-01-15T04:49:10.710Z]: Listening on *:8081

@@ -23,3 +23,6 @@
 <span style="color: gray">[2018-01-14T13:57:52.671Z]: </span>Subprocess killed
 <span style="color: gray">[2018-01-14T13:57:52.671Z]: </span><span style="color: green">Machine stopped!</span>
 <span style="color: gray">[2018-01-14T14:06:49.568Z]: </span>Turning off the server, code: undefined
+
+<span style="color: gray">[2018-01-15T04:49:10.687Z]: </span>Setting up server
+<span style="color: gray">[2018-01-15T04:49:10.710Z]: </span>Listening on *:8081

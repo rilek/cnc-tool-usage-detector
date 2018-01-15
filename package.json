@@ -19,7 +19,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "PORT=8081 babel-node frontend/socket-server.js --presets es2015,stage-2",
+    "start": "babel-node frontend/socket-server.js --presets es2015,stage-2",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

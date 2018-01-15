@@ -3,13 +3,14 @@ import fs from 'fs';
 import express from 'express';
 import socketio from 'socket.io';
 import watch from 'node-watch';
-import cp from 'child_process';
+import {spawn} from 'child_process';
 import c from './config';
 import { addLogRow, timeout } from './utils';
 import initState, {dispatch, setState, getState} from './store';
 import a from './actions';
 
-const port = process.env.PORT || 8081;
+// const port = process.env.PORT || 8081;
+const port = 8081;
 const app = express();
 const server = http.Server(app);
 const io = socketio(server);
@@ -24,6 +25,11 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
+console.log(c["rootFolder"] + "test.py");
+const process = spawn("python3", [c["rootFolder"] + "test.py"]);
+process.stdout.on('data', (data) => {
+  console.log("data");
+});
 
 
 addLogRow()("Setting up server");
@@ -51,7 +57,7 @@ io.on('connection', socket => {
 
     (async () => {
       await timeout(2000);
-      subprocess = cp.spawn('python3', [c["rootFolder"] + 'machine.py'], {detached: true});
+      subprocess = spawn('python3', [c["rootFolder"] + 'machine.py'], {detached: true});
       subprocess.unref();
       addLog(`Subprocess ID: ${subprocess.pid}`);
       io.sockets.emit('start_machine_success');
@@ -90,6 +96,8 @@ io.on('connection', socket => {
     if(evt === "update") {
       addLog('New file: ');
       addLog(name, 'yellow', true);
+
+
     }
   });
 });

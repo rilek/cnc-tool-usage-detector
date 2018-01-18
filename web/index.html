@@ -2,6 +2,10 @@
 <html>
 <head>
     <title>Tool Sharpness Tester</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/statics/libs/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/statics/libs/font-awesome/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="/statics/css/styles.css">
@@ -17,12 +21,21 @@
         <div class="row">
             <div class="container statuses">
                 <div class="">
-                    <div class="machine-state col-lg-2">
-                        Stan maszyny:
-                        <div class="power-button">
-                            <i class="fas fa-power-off"></i>
+                    <div class="machine-state col-lg-4">
+                        <div>
+                            Stan maszyny:
+                            <span class="machine-state-text">Wyłączona</span>
                         </div>
-                        <span class="machine-state-text">Włącz</span>maszynę
+                        <div>
+                            <div class="power-button on anim">
+                            </div>
+                            Włącz
+                        </div>
+                        <div>
+                            <div class="power-button off disabled">
+                            </div>
+                            Wyłącz
+                        </div>
                     </div>
                     <div class="tool-state col-lg-2">
                         Stan narzędzia:
@@ -33,6 +46,7 @@
                     </div>
                 </div>
                 <div class="buffer-state">
+                    
                     <h3>
                         Stan bufora:<br/>
                         <span class="buffer-state-text">0</span>
@@ -45,7 +59,6 @@
         <div class="row log-wrapper">
             <h2>Dziennik zdarzeń:</h2>
             <pre id="log"></pre>
-            <button id="test" class="btn btn-info">teścik</button>
             <button id="clear-log" class="btn btn-info">Wyczyść dziennik</button>
         </div>
 

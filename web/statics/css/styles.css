@@ -20,20 +20,33 @@
   margin: 0 3px;
 }
 
+.machine-state {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
 .machine-state-text { font-weight: bold; display: block; }
 
 .power-button {
   position: relative;
   background: #FF3B1E;
   cursor: pointer;
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   margin: 10px auto;
   border-radius: 50%;
   transition: .2s box-shadow ease,
               .5s background ease;
-  box-shadow: inset 0 0 35px  rgba(0,0,0,.3);
+  box-shadow: inset 0 0 25px  rgba(0,0,0,.5);
 }
+
+.power-button.disabled {
+  background: gray !important;
+  pointer-events: none;
+}
+
 .power-button:after {
   content: "";
   position: absolute;
@@ -47,7 +60,7 @@
   opacity: 0;
 }
 
-.power-button:not(.on):not(.loading):after {
+.power-button.anim:after {
   animation: dashed-border 3s ease-in-out infinite;
 }
 

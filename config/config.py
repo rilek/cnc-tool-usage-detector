@@ -32,7 +32,7 @@ TEST_CSV = True
 # LAST_GOOD = 1892 if TEST_CSV is True else 552
 VER = "v1/"
 TRAIN_FILES_DIR = ('train_data/new_train/final/' + VER) if TEST_CSV is True else 'train_data/train/'
-LAST_GOOD = 686 if TEST_CSV is True else 552
+LAST_GOOD = 928 if TEST_CSV is True else 552
 
 CONFIG = {
     # 'VARS': ['AccXSignal', 'VelZSignal', 'AccXSignal1', 'MicSignal'],

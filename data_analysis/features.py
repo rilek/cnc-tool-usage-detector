@@ -1,18 +1,24 @@
 """Features extraction module"""
 
 import sys
+
 import os
+sys.path.insert(1, sys.path[0] + os.sep + ".." + os.sep)
 import csv
 import numpy as np
-import pandas as pd
-import scipy.io as sio
-import scipy.stats as ss
-from statsmodels import robust
-import matplotlib.pyplot as plt
+# from numpy import matrix, mean, median, std, absolute, fft
+from pandas import read_csv
+from scipy.io import loadmat
+# import scipy.stats as ss
+from scipy.stats import skew, kurtosis
+from bottle import run, request, post, get
+# from statsmodels import robust
+# import matplotlib.pyplot as plt
 import json
-import collections
-from utils import utils as u
+# import collections
+from utilities import utils as u
 from config.config import CONFIG as c
+# import time
 
 
 def get_fft(arr, config):
@@ -30,12 +36,17 @@ def extract_features(file_path, config):
     Separate specifies signals.
     Computes Mean, Median, STD, Skew, Kurtosis and MAD for each one.
     Returns flat array of features"""
+
+    
+    import time
+    start_time = time.time()
+
     if config['TEST_CSV']:
-        file_data = pd.read_csv(file_path, header=None)
+        file_data = read_csv(file_path, header=None)
         signals = [file_data[0].tolist(), file_data[1].tolist()]
     else:
-        file_data = sio.loadmat(file_path)
-        signals = [np.transpose(file_data[signal])[0] for signal in config['VARS']]
+        file_data = loadmat(file_path)
+        signals = [np.matrix(file_data[signal]).T[0] for signal in config['VARS']]
 
 
     ffts = [get_fft(signal, config) for signal in signals]
@@ -50,15 +61,16 @@ def extract_features(file_path, config):
     # plt.plot(xf[61:68], ffts[1][61:68])
     # plt.show()
     # shown = True
+    
 
     features_list = []
     for signal in signals:
         features_list.extend([
-            np.mean(np.abs(signal)),
+            np.mean(signal),
             np.median(signal),
             np.std(signal),
-            ss.skew(signal),
-            ss.kurtosis(signal)
+            skew(signal),
+            kurtosis(signal)
         ])
 
 
@@ -71,24 +83,24 @@ def extract_features(file_path, config):
             np.mean(signal),
             np.median(signal),
             np.std(signal),
-            ss.skew(signal),
+            skew(signal),
             # np.sqrt(np.mean(signal**2)),
-            ss.kurtosis(signal),
-            np.var(signal),
-            np.ptp(signal)
+            kurtosis(signal),
+            # np.var(signal),
+            # np.ptp(signal)
         ])
 
         features_list_fft.extend([
             np.mean(peak),
             np.median(peak),
             np.std(peak),
-            ss.skew(peak),
+            skew(peak),
             # np.sqrt(np.mean(peak**2)),
-            # ss.kurtosis(peak),
+            # kurtosis(peak),
             # np.var(peak),
             # np.ptp(peak)
         ])
-
+    # return features_list 
     return features_list + features_list_fft
 
 
@@ -112,18 +124,31 @@ def get_signal_features(directory, config, exists=True, csvfilename='features.cs
             result = [np.array([float(i) for i in row]) for row in reader]
             return np.matrix(result)
 
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        args = sys.argv[1:]
-        _dir = args[0]
-        dt = {}
-        np.set_printoptions(threshold=sys.maxsize)
-        ft = extract_features(_dir, c)
-        pred_cls = "2"
-        if _dir.split("/")[-1].startswith("Tepe"):
-            pred_cls = "1"
-        elif _dir.split("/")[-1].startswith("Ostre"):
-            pred_cls = "0"
 
-        print('{"features":' + str(ft) + ', "class": '+ pred_cls  + '}')
-        sys.stdout.flush()
+
+@post('/')
+def index():
+    file_name = str(request.body.getvalue(), 'utf-8')
+    return json.dumps(extract_features(file_name, c))
+
+def start_server():
+    """Starts server"""
+
+    run(host='localhost', port=8082)
+
+if __name__ == "__main__":
+
+    start_server()
+    # if len(sys.argv) > 1:
+    #     args = sys.argv[1:]
+    #     _dir = args[0]
+    #     dt = {}
+    #     ft = extract_features(_dir, c)
+    #     pred_cls = "2"
+    #     if _dir.split("/")[-1].startswith("Tepe"):
+    #         pred_cls = "1"
+    #     elif _dir.split("/")[-1].startswith("Ostre"):
+    #         pred_cls = "0"
+
+    #     print('{"features":' + str(ft) + ', "class": '+ pred_cls  + '}')
+    #     sys.stdout.flush()

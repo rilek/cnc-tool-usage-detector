@@ -1,12 +1,13 @@
 """Classifiers testing module"""
 
+import sys, os
 import numpy as np
 import sklearn.metrics as metrics
 from sklearn.model_selection import train_test_split
 from sklearn.externals import joblib
 from colorama import init
 import data_analysis.features as features
-from utils import utils as u
+from utilities import utils as u
 from config.config import CONFIG as c
 
 init()
@@ -72,7 +73,7 @@ def test_classifiers(classifiers, config, model_filename='model.pkl'):
     u.pprint("\nChosen model: {}.{}, with score: {}%".format(bm_n, bm_name, round(bm_score*100, 2)),
              'red')
 
-    joblib.dump(bm_model, model_filename)
+    joblib.dump(bm_model, sys.path[0] + os.sep + "models" + os.sep + model_filename)
 
 
 if __name__ == '__main__':

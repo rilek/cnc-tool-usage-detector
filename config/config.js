@@ -1,7 +1,10 @@
+const rootFolder = __dirname + "/../";
+
 export default {
-  textLogPath: __dirname + "/logs/text.log",
-  htmlLogPath: __dirname + "/logs/html.log",
-  rootFolder: __dirname + "/../",
+  textLogPath: rootFolder + "logs/text.log",
+  htmlLogPath: rootFolder + "logs/html.log",
+  rootFolder: rootFolder,
+  tmpFilesFolder: rootFolder + "tmp_files",
   colors: {
     green: "green",
     red: "red",

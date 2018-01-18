@@ -46,7 +46,6 @@ store.registerAction("log_history", function(logs) {
 });
 
 store.registerAction("clear_logs", function() {
-  $('#log').html("");
   socket.emit("clear_logs");
 });
 
@@ -84,7 +83,8 @@ function initSockets(u) {
   socket.on('disconnect', function () {
     // u.addLogRow('Client disconnected from server', "red");
     store.dispatch("change_machine_state", "stopped");
-    store.dispatch("change_tool_state", -1)
+    store.dispatch("change_tool_state", -1);
+    
   });
 
   socket.on('tmp_file_change', function (name) {
@@ -93,6 +93,10 @@ function initSockets(u) {
   socket.on('reload', function() {
     location.reload();
   });
+
+  socket.on('clear_logs', function() {
+    $('#log').html("");
+  })
 
   socket.on('new_log', function(log) {
     $log = $('#log');
@@ -131,8 +135,12 @@ function initSockets(u) {
 
 
 function initEventListeners(u, socket) {
-  $(".power-button").on('click', function () {
-    store.dispatch("toggle_machine_state");
+  $(".power-button.on").on('click', function () {
+    store.dispatch("start_machine");
+  });
+
+  $(".power-button.off").on('click', function () {
+    store.dispatch("stop_machine");
   });
 
   $('#clear-log').on('click', function() {
@@ -201,17 +209,21 @@ function machineStateReactor() {
 
       switch(newval) {
         case "running":
-          $(".power-button").addClass("on").removeClass("loading");
-          $('.machine-state-text').text("Wyłącz");
+          $(".power-button.on").removeClass("anim").addClass("disabled");
+          $(".power-button.off").addClass("anim").removeClass("disabled");
+          $('.machine-state-text').text("Włączona");
           break;
 
         case "stopped":
-          $(".power-button").removeClass("on").removeClass("loading");
-          $('.machine-state-text').text("Włącz");
+          $(".power-button.on").addClass("anim").removeClass("disabled");
+          $(".power-button.off").removeClass("anim").addClass("disabled");
+          $('.machine-state-text').text("Wyłączona");
           break;
-
+          
         case "waiting":
-          $(".power-button").removeClass("on").addClass("loading");
+          $(".power-button.on").removeClass("anim");
+          $(".power-button.off").removeClass("anim");
+          $('.machine-state-text').text("W trakcie...");
           break;
       }
     }

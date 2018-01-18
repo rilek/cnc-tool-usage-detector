@@ -1,5 +1,6 @@
 import http from 'http';
 import fs from 'fs';
+import path from 'path';
 import express from 'express';
 import socketio from 'socket.io';
 import watch from 'node-watch';
@@ -10,6 +11,7 @@ import initState, {dispatch, setState, getState} from './store';
 import a from './actions';
 import request from 'request';
 import { StringDecoder } from 'string_decoder';
+import chokidar from 'chokidar';
 
 // const port = process.env.PORT || 8081;
 const port = 8081;
@@ -28,16 +30,26 @@ app.get('/', (req, res) => {
 });
 
 
-// let obj = fs.readFile('train/Ostre1_165.mat', (err, data) => {
-//   console.log(data.toString())
-// })
+chokidar.watch(c["tmpFilesFolder"], {ignoreInitial: true}).on("add", name => {
+  const file_class = name.split(path.sep).reverse()[0].startsWith("Ostre") ? "0" : "1";
+  const addLog = addLogRow(io);
+  addLog('New file: ');
+  addLog(name, 'yellow', true);
 
-// jbinary.load('train/Ostre1_165.mat', MAT).then(binary => {
-//   let mat = binary.read('mat');
-//   console.log(mat);
-// })
-
-
+  request.post("http://localhost:8082", {body: name} , (err, res) => {
+    request.post("http://localhost:8080", {json: {"features": JSON.parse(res.body)}}, (err, res) => {
+      addLog("Real Class: ");
+      addLog(file_class, null, true);
+      addLog(". Predicted class: ", null, true);
+      addLog(res.body, null, true);
+      
+      if (res.body === 1)
+        dispatch("set_blunt_tool", io.sockets);
+      else if (res.body === 0)
+        dispatch("set_sharp_tool", io.sockets);
+    });
+  });
+});
 
 addLogRow()("Setting up server");
 io.on('connection', socket => {
@@ -47,15 +59,16 @@ io.on('connection', socket => {
     "init_machine_state",
     subprocess !== null && subprocess !== undefined ? "running" : "stopped"
   );
-
-  addLogRow()("New connection");
+  
   socket.emit('connected', {
     state: getState(),
     log: fs.readFileSync(c["htmlLogPath"], "utf-8")
   });
-
-  socket.on("diconnect", () => {
-    addLog("Diconnected");
+  addLog("New connection");
+  
+  
+  socket.on("disconnect", () => {
+    addLog("User diconnected.", 'red');
   })
 
   socket.on('start_machine', () => {
@@ -63,7 +76,7 @@ io.on('connection', socket => {
 
     (async () => {
       await timeout(2000);
-      subprocess = spawn('python', [c["rootFolder"] + 'machine.py'], {detached: true});
+      subprocess = spawn('py', [c["rootFolder"] + 'run_emulator.py'], {detached: true});
       console.log(c["rootFolder"] + 'machine.py');
       subprocess.unref();
       addLog(`Subprocess ID: ${subprocess.pid}`);
@@ -97,34 +110,8 @@ io.on('connection', socket => {
   socket.on('clear_logs', () => {
     fs.writeFile(c['htmlLogPath'], "", () => {});
     fs.writeFile(c['textLogPath'], "", () => {});
-  });
-
-  watch(__dirname + "/../tmp_files", (evt, name) => {
-    if(evt === "update") {
-      addLog('New file: ');
-      addLog(name, 'yellow', true);
-
-      const proc = spawn("python3", [c["rootFolder"] + "features.py", "train/Ostre1_165.mat"]);
-      var decoder = new StringDecoder('utf8');
-      proc.stdout.on('data', async(data) => {
-        const _data = await decoder.write(data);
-        const __data = JSON.parse(_data)
-        console.log(__data)
-        // const _data = data.toString();
-        const cl = __data.class;
-        request.post("http://localhost:8080", {json: __data}, (err, response) => {
-          addLog("Real Class: ");
-          addLog(cl, null, true);
-          addLog(". Predicted class: ", null, true);
-          addLog(response.body, null, true);
-          if(response.body === "0")
-            io.sockets.emit("sharp_tool");
-          else if(response.body === "1")
-            io.sockets.emit("blunt_tool");
-        });
-      });
-
-    }
+    io.sockets.emit("clear_logs")
+    addLog("Logs cleared");
   });
 });
 

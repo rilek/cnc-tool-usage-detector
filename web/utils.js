@@ -1,7 +1,7 @@
 import fs from 'fs';
 import watch from 'node-watch';
 import cp from 'child_process';
-import c from './config';
+import c from '../config/config';
 
 
 const textStream = fs.createWriteStream(c["textLogPath"], {flags: 'a'});

@@ -6,7 +6,7 @@ import csv
 from shutil import copy2
 import numpy as np
 import pandas as pd
-from config import CONFIG as c
+from config.config import CONFIG as c
 
 def mkdir_if_not_exists(dirs):
     """A"""
@@ -24,44 +24,80 @@ def prepare_dirs(dirs):
 
 
 def init():
-    """Init"""
+    """Main function"""
 
     directory = c["NEW_TRAIN_FILES_DIR"]
     ver = c["VER"]
     get_pt_dir = lambda pt: directory + "pt" + pt + "/" + ver
     files_list = os.listdir(get_pt_dir('0'))
-    files_first = files_list[0]
 
-    prepare_dirs([get_pt_dir('1'), get_pt_dir('2'), get_pt_dir('3')])
+    # prepare_dirs([get_pt_dir('1'), get_pt_dir('2'), get_pt_dir('3')])
     mkdir_if_not_exists(directory + "final/" + ver)
-
-    # pt1(files_list, get_pt_dir('0'), get_pt_dir('1'))
-    # pt2(['ostre/', 'tepe/'], get_pt_dir('1'), get_pt_dir('2'))
-    # pt3(['ostre/', 'tepe/'], get_pt_dir('2'), get_pt_dir('3'))
-    pt4(['ostre/', 'tepe/'], get_pt_dir('3'), directory + "final/" + ver)
-
-
-    # file_list = os.listdir(get_pt_dir('3') + "ostre/")
-    # print(file_list[0])
-    # df = pd.read_csv(get_pt_dir('3') + "ostre/" + file_list[0], header=None)
-    # print(df[0])
-
-
-
-
-def pt1(files_list, pt1_dir, pt2_dir):
-    """Groups files in 2 directories: 'tepe' and 'ostre'"""
+    indexes = [0, 0] # sharp_i, blunt_i
 
     for file_name in files_list:
         p = re.search('(?<=P)(\d)+', file_name).group()
-        d = re.search('(?<=D)(\d)+', file_name).group()
-        ts = re.search('(?<=_)([\d-]+)', file_name).group()
-        if p == '2':
-            # print(file_name, "tepe")
-            copy2(pt1_dir + file_name, pt2_dir + "tepe/" + "Tepe_D" + d + "_" + ts + ".txt")
-        elif not p == '0':
-            # print(file_name, "ostre")
-            copy2(pt1_dir + file_name, pt2_dir + "ostre/" + "Ostre_D" + d + "_" + ts + ".txt")
+
+        if not p == '0':
+            file_class = 1 if p == '2' else 0
+            fil = pt2_2(file_name,get_pt_dir('0'))
+            pt3_2(fil, file_class, directory + "final/" + ver, indexes)
+
+    # pt1(files_list, get_pt_dir('0'), directory + "final/" + ver)
+    # pt2(classes, get_pt_dir('1'), get_pt_dir('2'))
+    # pt3(classes, get_pt_dir('2'), get_pt_dir('3'))
+    # pt4(classes, get_pt_dir('3'), directory + "final/" + ver)
+
+
+
+def pt1(files_list, pt0_dir, final_dest):
+    """Groups files in 2 directories: 'tepe' and 'ostre'"""
+
+        # if p == '2':
+        #     copy2(pt0_dir + file_name, pt1_dir + "Tepe_" + ts + ".txt")
+        # elif not p == '0':
+        #     copy2(pt0_dir + file_name, pt1_dir + "Ostre_D" + ts + ".txt")
+
+def pt2_2(file_name, final_dest):
+    """A"""
+
+    results = []
+    with open(final_dest + file_name) as fil:
+        for line in fil:
+            splitted_line = line.split(",")
+            sensor = splitted_line[0]
+            measurements = splitted_line[8:][0::2]
+            results.append([sensor] + measurements)
+    return results
+
+def pt3_2(fil, file_class, final_dest, indexes):
+    """A"""
+
+    acc_signal = []
+    mic_signal = []
+
+    for line in fil:
+        sensor = line[0]
+        measurements = line[1:]
+
+        if sensor == "1":
+            acc_signal.extend(measurements)
+        elif sensor == "2":
+            mic_signal.extend(measurements)
+
+        if len(mic_signal) >= 16000 and len(mic_signal) == len(acc_signal):
+            file_name = "Tepe_" if file_class == 1 else "Ostre"
+
+            with open(final_dest+file_name+str(indexes[file_class])+".csv", "w+", newline='') as csvfile:
+                writer = csv.writer(csvfile, delimiter=",")
+                for row in np.matrix([acc_signal, mic_signal]).T.tolist():
+                    writer.writerow(row)
+
+            acc_signal = []
+            mic_signal = []
+
+            indexes[file_class] = indexes[file_class] + 1
+
 
 def pt2(dirs, pt1_dir, pt2_dir):
     """Cleans up files from tepe and ostre directories:

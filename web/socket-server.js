@@ -4,7 +4,7 @@ import express from 'express';
 import socketio from 'socket.io';
 import watch from 'node-watch';
 import {spawn} from 'child_process';
-import c from './config';
+import c from '../config/config';
 import { addLogRow, timeout, getClassStr } from './utils';
 import initState, {dispatch, setState, getState} from './store';
 import a from './actions';
@@ -63,7 +63,8 @@ io.on('connection', socket => {
 
     (async () => {
       await timeout(2000);
-      subprocess = spawn('python3', [c["rootFolder"] + 'machine.py'], {detached: true});
+      subprocess = spawn('python', [c["rootFolder"] + 'machine.py'], {detached: true});
+      console.log(c["rootFolder"] + 'machine.py');
       subprocess.unref();
       addLog(`Subprocess ID: ${subprocess.pid}`);
       io.sockets.emit('start_machine_success');
@@ -126,7 +127,6 @@ io.on('connection', socket => {
     }
   });
 });
-
 
 server.listen(port, function () {
   addLogRow()(`Listening on *:${port}`);

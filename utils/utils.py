@@ -1,5 +1,6 @@
 """Utility functions"""
 
+import sys
 import csv
 from sklearn.externals import joblib
 from colorama import init, Fore, Style
@@ -24,7 +25,7 @@ def load_model(model_path='model.pkl'):
     """Takes optional model file path.
     Returns trained model loaded from file."""
 
-    return joblib.load(model_path)
+    return joblib.load(sys.path[0] + "\\models\\" + model_path)
 
 COLORS = {
     "black": Fore.BLACK,

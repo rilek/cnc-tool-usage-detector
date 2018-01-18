@@ -7,7 +7,6 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
-from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 
 
 CLASSIFIERS = [
@@ -19,7 +18,6 @@ CLASSIFIERS = [
     ["Neural Net", MLPClassifier()],
     ["AdaBoost", AdaBoostClassifier()],
     ["Naive Bayes", GaussianNB()],
-    ["QDA", QuadraticDiscriminantAnalysis()]
 ]
 
 FS = 25000
@@ -32,8 +30,8 @@ TEST_CSV = True
 # VER = ""
 # TRAIN_FILES_DIR = ('new_train/final_f/' + VER) if TEST_CSV is True else 'train/'
 # LAST_GOOD = 1892 if TEST_CSV is True else 552
-VER = "v2/"
-TRAIN_FILES_DIR = ('new_train/final/' + VER) if TEST_CSV is True else 'train/'
+VER = "v1/"
+TRAIN_FILES_DIR = ('train_data/new_train/final/' + VER) if TEST_CSV is True else 'train_data/train/'
 LAST_GOOD = 686 if TEST_CSV is True else 552
 
 CONFIG = {
@@ -41,20 +39,20 @@ CONFIG = {
     'VARS': ['AccXSignal', 'MicSignal'],
     'TMP_FILES_DIR': 'tmp_files/',
     'TRAIN_FILES_DIR': TRAIN_FILES_DIR,
-    'NEW_TRAIN_FILES_DIR': 'new_train/',
+    'NEW_TRAIN_FILES_DIR': 'train_data/new_train/',
     'TRAIN_FILES_LAST_GOOD': LAST_GOOD,
     'VER': VER,
     'TEST_CSV': TEST_CSV,
     'TRAIN_PERCENT': 0.9,
     'CLASSIFIERS': CLASSIFIERS,
-    'EXISTS': False,
-    'FEATURES_FILE': 'features2.csv',
+    'FEATURES_EXISTS': False,
+    'FEATURES_FILE': 'csv/features.csv',
     'Fs': FS,
     'T': T,
     'L': L,
     't': np.linspace(0.0, L*T, L),
     'm': M,
     'f': F,
-    'HertzIndex': F.index(next(i for i in F if i > 500)),
-    'HertzIndex_min': F.index(next(i for i in F if i > 0)),
+    'HERTZ_INDEX_MAX': F.index(next(i for i in F if i >= 250)),
+    'HERTZ_INDEX_MIN': F.index(next(i for i in F if i >= 150)),
 }

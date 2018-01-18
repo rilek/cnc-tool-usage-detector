@@ -3,12 +3,7 @@ Uses trained model from file."""
 
 import numpy as np
 from bottle import run, request, post
-import utils as u
-import features
-from config import CONFIG as c
-import json
-import io
-
+import utils.utils as u
 CLF = u.load_model()
 
 
@@ -30,6 +25,7 @@ def index():
 def start_server():
     """Starts server"""
 
+    
     run(host='localhost', port=8080)
 
 

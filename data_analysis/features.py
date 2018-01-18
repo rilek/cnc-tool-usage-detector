@@ -8,11 +8,11 @@ import pandas as pd
 import scipy.io as sio
 import scipy.stats as ss
 from statsmodels import robust
-import utils as u
 import matplotlib.pyplot as plt
 import json
 import collections
-from config import CONFIG as c
+from utils import utils as u
+from config.config import CONFIG as c
 
 
 def get_fft(arr, config):
@@ -23,7 +23,7 @@ def get_fft(arr, config):
     ds_spectrum = np.abs(data_fft/config['L'])
     ss_spectrum = 2*ds_spectrum[0:config['m']]
 
-    return ss_spectrum[config['HertzIndex_min']:config['HertzIndex']]
+    return ss_spectrum[config['HERTZ_INDEX_MIN']:config['HERTZ_INDEX_MAX']]
 
 def extract_features(file_path, config):
     """Takes path to file with signals.
@@ -39,6 +39,7 @@ def extract_features(file_path, config):
 
 
     ffts = [get_fft(signal, config) for signal in signals]
+
     # signals.extend(ffts)
 
 
@@ -52,9 +53,8 @@ def extract_features(file_path, config):
 
     features_list = []
     for signal in signals:
-        # print(rms(signal))
         features_list.extend([
-            np.mean(signal),
+            np.mean(np.abs(signal)),
             np.median(signal),
             np.std(signal),
             ss.skew(signal),
@@ -65,14 +65,14 @@ def extract_features(file_path, config):
     features_list_fft = []
     for signal in ffts:
         # PEAK IDXS [61:68]
-        peak = signal[61-config['HertzIndex_min']:68-config['HertzIndex_min']]
+        peak = signal[61-config['HERTZ_INDEX_MAX']:68-config['HERTZ_INDEX_MIN']]
 
         features_list_fft.extend([
             np.mean(signal),
-            # np.median(signal),
+            np.median(signal),
             np.std(signal),
             ss.skew(signal),
-            np.sqrt(np.mean(signal**2)),
+            # np.sqrt(np.mean(signal**2)),
             ss.kurtosis(signal),
             np.var(signal),
             np.ptp(signal)
@@ -83,10 +83,10 @@ def extract_features(file_path, config):
             np.median(peak),
             np.std(peak),
             ss.skew(peak),
-            np.sqrt(np.mean(peak**2)),
-            ss.kurtosis(peak),
-            np.var(peak),
-            np.ptp(peak)
+            # np.sqrt(np.mean(peak**2)),
+            # ss.kurtosis(peak),
+            # np.var(peak),
+            # np.ptp(peak)
         ])
 
     return features_list + features_list_fft
@@ -112,18 +112,18 @@ def get_signal_features(directory, config, exists=True, csvfilename='features.cs
             result = [np.array([float(i) for i in row]) for row in reader]
             return np.matrix(result)
 
-# if __name__ == "__main__":
-#     if len(sys.argv) > 1:
-#         args = sys.argv[1:]
-#         _dir = args[0]
-#         dt = {}
-#         np.set_printoptions(threshold=sys.maxsize)
-#         ft = extract_features(_dir, c)
-#         pred_cls = "2"
-#         if _dir.split("/")[-1].startswith("Tepe"):
-#             pred_cls = "1"
-#         elif _dir.split("/")[-1].startswith("Ostre"):
-#             pred_cls = "0"
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        args = sys.argv[1:]
+        _dir = args[0]
+        dt = {}
+        np.set_printoptions(threshold=sys.maxsize)
+        ft = extract_features(_dir, c)
+        pred_cls = "2"
+        if _dir.split("/")[-1].startswith("Tepe"):
+            pred_cls = "1"
+        elif _dir.split("/")[-1].startswith("Ostre"):
+            pred_cls = "0"
 
-#         print('{"features":' + str(ft) + ', "class": '+ pred_cls  + '}')
-#         sys.stdout.flush()
+        print('{"features":' + str(ft) + ', "class": '+ pred_cls  + '}')
+        sys.stdout.flush()

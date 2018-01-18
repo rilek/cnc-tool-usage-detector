@@ -4,25 +4,19 @@
   "description": "",
   "main": "socket-server.js",
   "dependencies": {
-    "amnesia": "^1.0.5",
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "eslint": "^4.15.0",
     "express": "^4.16.2",
-    "express-minify-html": "^0.12.0",
-    "jbinary": "^2.1.3",
-    "koa": "^2.4.1",
     "node-watch": "^0.5.5",
     "python-shell": "^0.4.0",
     "request": "^2.83.0",
-    "socket.io": "^2.0.4",
-    "websocket": "^1.0.25",
-    "ws": "^4.0.0"
+    "socket.io": "^2.0.4"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "babel-node frontend/socket-server.js --presets es2015,stage-2",
+    "start": "babel-node web/socket-server.js --presets es2015,stage-2",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

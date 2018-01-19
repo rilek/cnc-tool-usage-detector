@@ -10,7 +10,7 @@ import ast
 import numpy as np
 import json
 from bottle import run, request, post
-from utilities import utils as u
+from data_analysis import utils as u
 from config.config import CONFIG as c
 CLF = joblib.load(sys.path[0] + "\\..\\models\\" + "model.pkl")
 

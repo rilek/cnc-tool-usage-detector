@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.externals import joblib
 from colorama import init
 import data_analysis.features as features
-from utilities import utils as u
+from data_analysis import utils as u
 from config.config import CONFIG as c
 
 init()

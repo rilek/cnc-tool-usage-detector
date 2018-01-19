@@ -3,7 +3,6 @@ import fs from 'fs';
 import path from 'path';
 import express from 'express';
 import socketio from 'socket.io';
-import watch from 'node-watch';
 import {spawn} from 'child_process';
 import c from '../config/config';
 import { addLogRow, timeout, getClassStr } from './utils';
@@ -13,10 +12,6 @@ import request from 'request';
 import { StringDecoder } from 'string_decoder';
 import chokidar from 'chokidar';
 
-// const port = process.env.PORT || 8081;
-const port = 8081;
-const app = express();
-const server = http.Server(app);
 const io = socketio(server);
 let subprocess = null;
 let initStore = initState;
@@ -24,9 +19,19 @@ let initStore = initState;
 const textStream = fs.createWriteStream(c["textLogPath"], {flags: 'a'});
 const htmlStream = fs.createWriteStream(c["htmlLogPath"], {flags: 'a'});
 
+// const port = process.env.PORT || 8081;
+const port = 8081;
+const app = express();
+const server = http.Server(app);
+
+addLogRow()("Setting up server");
 app.use('/statics', express.static(__dirname +  '/statics'));
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
+});
+
+server.listen(port, function () {
+  addLogRow()(`Listening on *:${port}`);
 });
 
 
@@ -36,8 +41,8 @@ chokidar.watch(c["tmpFilesFolder"], {ignoreInitial: true}).on("add", name => {
   addLog('New file: ');
   addLog(name, 'yellow', true);
 
-  request.post("http://localhost:8082", {body: name} , (err, res) => {
-    request.post("http://localhost:8080", {json: {"features": JSON.parse(res.body)}}, (err, res) => {
+  request.post(c["featuresApi"], {body: name} , (err, res) => {
+    request.post(c["classifierApi"], {json: {"features": JSON.parse(res.body)}}, (err, res) => {
       addLog("Real Class: ");
       addLog(file_class, null, true);
       addLog(". Predicted class: ", null, true);
@@ -51,7 +56,6 @@ chokidar.watch(c["tmpFilesFolder"], {ignoreInitial: true}).on("add", name => {
   });
 });
 
-addLogRow()("Setting up server");
 io.on('connection', socket => {
   const addLog = addLogRow(io);
 
@@ -82,9 +86,6 @@ io.on('connection', socket => {
       addLog(`Subprocess ID: ${subprocess.pid}`);
       io.sockets.emit('start_machine_success');
       addLog("Machine started!", 'green');
-
-      // await timeout(2000);
-      // dispatch('set_sharp_tool', io.sockets);
     })();
   });
 
@@ -115,9 +116,6 @@ io.on('connection', socket => {
   });
 });
 
-server.listen(port, function () {
-  addLogRow()(`Listening on *:${port}`);
-});
 
 const fn = (err) => {
   process.stdin.resume();

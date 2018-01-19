@@ -5,12 +5,12 @@ import os
 import random
 from shutil import copy2, rmtree
 import time as t
-from utilities import utils as u
+from data_analysis import utils as u
 from config.config import CONFIG as c
 
 
 def init():
-    """A"""
+    """Initialization of machine emulator"""
 
     machine_state = "running"
     from_dir = c['TRAIN_FILES_DIR']
@@ -24,6 +24,5 @@ def init():
             for f in tmp_files:
                 os.remove(to_dir + f)
         t.sleep(1)
-
 
 init()

@@ -17,7 +17,7 @@
   text-align: center;
   line-height: 1;
   height: 160px;
-  margin: 0 3px;
+  margin: 5px 3px;
 }
 
 .machine-state {
@@ -115,12 +115,12 @@
 }
 
 .buffer-state {
-  margin-top: 50px;
+  margin-top: 15px;
 }
 
 .log-wrapper {
   width: 100%;
-  margin-top: 30px;
+  margin: 30px 0;
 }
 
 #log {

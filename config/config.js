@@ -5,6 +5,8 @@ export default {
   htmlLogPath: rootFolder + "logs/html.log",
   rootFolder: rootFolder,
   tmpFilesFolder: rootFolder + "tmp_files",
+  featuresApi: "http://localhost:8082",
+  clasifierApi: "http://localhost:8080",
   colors: {
     green: "green",
     red: "red",

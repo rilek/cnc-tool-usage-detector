@@ -16,7 +16,7 @@ from bottle import run, request, post, get
 # import matplotlib.pyplot as plt
 import json
 # import collections
-from utilities import utils as u
+from data_analysis import utils as u
 from config.config import CONFIG as c
 # import time
 

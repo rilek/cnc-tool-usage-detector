@@ -1,6 +1,8 @@
 
 
-var store = Store();
+var store = new Store();
+
+
 store.initReactors(
   machineStateReactor(),
   toolStateReactor()
@@ -19,6 +21,10 @@ store.registerAction("change_tool_state", function(x) {
 
 store.registerAction("change_machine_state", function(x) {
   store.setState({machine_state: x});
+});
+
+store.registerAction("machine_started", function() {
+  store.setState({machine_state: "running"});
 });
 
 store.registerAction("start_machine", function() {
@@ -105,7 +111,7 @@ function initSockets(u) {
   });
 
   socket.on('start_machine_success', function() {
-    store.dispatch("change_machine_state", "running");
+    store.dispatch("machine_started");
   });
 
   socket.on('start_machine_fail', function() {
@@ -146,6 +152,18 @@ function initEventListeners(u, socket) {
   $('#clear-log').on('click', function() {
     store.dispatch("clear_logs");
   });
+  
+  $("#first-exp").on('click', function() {
+    $(".buffer-state-inner").hide();
+    $(this).addClass("btn-primary");
+    $("#second-exp").removeClass("btn-primary");
+  });
+  
+  $("#second-exp").on('click', function() {
+    $(".buffer-state-inner").show();
+    $(this).addClass("btn-primary");
+    $("#first-exp").removeClass("btn-primary");
+  });
 }
 
 
@@ -154,7 +172,8 @@ function Store() {
   var state = {
     machine_state: null,
     tool_state: null,
-    buffer_state: null
+    buffer_state: null,
+    experiment: 1
   };
   var reactors = {};
   var actions = {};
@@ -239,21 +258,18 @@ function toolStateReactor() {
 
       switch(newval) {
         case 1:
-          // u.addLogRow("Blunt", "red", true);
           $('.tool-status').removeClass("sharp").addClass("blunt");
           $('.tool-status i').removeClass().addClass("far fa-times-circle");
           $('.tool-state-text').text("Tępe");
           break;
 
         case 0:
-          // u.addLogRow("Sharp", "green", true);
           $('.tool-status i').removeClass().addClass("far fa-check-circle");
           $('.tool-status').removeClass("blunt").addClass("sharp");
           $('.tool-state-text').text("Ostre");
           break;
 
         case -1:
-          // u.addLogRow("N/A", "gray", true);
           $('.tool-status i').removeClass().addClass("far fa-question-circle");
           $('.tool-status').removeClass("blunt sharp");
           $('.tool-state-text').text("N/A");

@@ -12,6 +12,11 @@ import request from 'request';
 import { StringDecoder } from 'string_decoder';
 import chokidar from 'chokidar';
 
+
+// const port = process.env.PORT || 8081;
+const port = 8081;
+const app = express();
+const server = http.Server(app);
 const io = socketio(server);
 let subprocess = null;
 let initStore = initState;
@@ -19,21 +24,11 @@ let initStore = initState;
 const textStream = fs.createWriteStream(c["textLogPath"], {flags: 'a'});
 const htmlStream = fs.createWriteStream(c["htmlLogPath"], {flags: 'a'});
 
-// const port = process.env.PORT || 8081;
-const port = 8081;
-const app = express();
-const server = http.Server(app);
-
 addLogRow()("Setting up server");
 app.use('/statics', express.static(__dirname +  '/statics'));
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
-
-server.listen(port, function () {
-  addLogRow()(`Listening on *:${port}`);
-});
-
 
 chokidar.watch(c["tmpFilesFolder"], {ignoreInitial: true}).on("add", name => {
   const file_class = name.split(path.sep).reverse()[0].startsWith("Ostre") ? "0" : "1";
@@ -116,6 +111,10 @@ io.on('connection', socket => {
   });
 });
 
+
+server.listen(port, function () {
+  addLogRow()(`Listening on *:${port}`);
+});
 
 const fn = (err) => {
   process.stdin.resume();

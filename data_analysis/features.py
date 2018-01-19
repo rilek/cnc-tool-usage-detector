@@ -29,24 +29,20 @@ def get_fft(arr, config):
     ds_spectrum = np.abs(data_fft/config['L'])
     ss_spectrum = 2*ds_spectrum[0:config['m']]
 
-    return ss_spectrum[config['HERTZ_INDEX_MIN']:config['HERTZ_INDEX_MAX']]
+    return ss_spectrum[1:config['f'].index(next(i for i in config['f'] if i >= 1000))]
 
 def extract_features(file_path, config):
     """Takes path to file with signals.
     Separate specifies signals.
-    Computes Mean, Median, STD, Skew, Kurtosis and MAD for each one.
+    Computes Mean, Median, STD, Skew, Kurtosis for each one.
     Returns flat array of features"""
-
-    
-    import time
-    start_time = time.time()
 
     if config['TEST_CSV']:
         file_data = read_csv(file_path, header=None)
         signals = [file_data[0].tolist(), file_data[1].tolist()]
     else:
         file_data = loadmat(file_path)
-        signals = [np.matrix(file_data[signal]).T[0] for signal in config['VARS']]
+        signals = [np.transpose(file_data[signal])[0] for signal in config['VARS']]
 
 
     ffts = [get_fft(signal, config) for signal in signals]
@@ -66,21 +62,22 @@ def extract_features(file_path, config):
     features_list = []
     for signal in signals:
         features_list.extend([
-            np.mean(signal),
+            # np.mean(signal),
             np.median(signal),
             np.std(signal),
             skew(signal),
-            kurtosis(signal)
+            kurtosis(signal),
+            # np.ptp(signal)
         ])
 
 
     features_list_fft = []
     for signal in ffts:
         # PEAK IDXS [61:68]
-        peak = signal[61-config['HERTZ_INDEX_MAX']:68-config['HERTZ_INDEX_MIN']]
+        peak = signal[61-config['HERTZ_INDEX_MIN']+1 :68-config['HERTZ_INDEX_MIN']+1]
 
         features_list_fft.extend([
-            np.mean(signal),
+            # np.mean(signal),
             np.median(signal),
             np.std(signal),
             skew(signal),
@@ -115,7 +112,7 @@ def get_signal_features(directory, config, exists=True, csvfilename='features.cs
         print("Extracting features from files")
         result = [extract_features(directory + item, config)
                   for item in os.listdir(directory)]
-        u.save_features_to_file(result)
+        u.save_features_to_file(result, csvfilename)
         print("Extracting finished")
         return np.matrix(result)
     else:

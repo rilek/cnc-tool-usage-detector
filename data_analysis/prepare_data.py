@@ -31,7 +31,6 @@ def init():
     get_pt_dir = lambda pt: directory + "pt" + pt + "/" + ver
     files_list = os.listdir(get_pt_dir('0'))
 
-    # prepare_dirs([get_pt_dir('1'), get_pt_dir('2'), get_pt_dir('3')])
     mkdir_if_not_exists(directory + "final/" + ver)
     indexes = [0, 0] # sharp_i, blunt_i
 
@@ -40,26 +39,13 @@ def init():
 
         if not p == '0':
             file_class = 1 if p == '2' else 0
-            fil = pt2_2(file_name,get_pt_dir('0'))
-            pt3_2(fil, file_class, directory + "final/" + ver, indexes)
-
-    # pt1(files_list, get_pt_dir('0'), directory + "final/" + ver)
-    # pt2(classes, get_pt_dir('1'), get_pt_dir('2'))
-    # pt3(classes, get_pt_dir('2'), get_pt_dir('3'))
-    # pt4(classes, get_pt_dir('3'), directory + "final/" + ver)
+            fil = cleanup(file_name, get_pt_dir('0'))
+            group(fil, file_class, directory + "final/" + ver, indexes)
 
 
-
-def pt1(files_list, pt0_dir, final_dest):
-    """Groups files in 2 directories: 'tepe' and 'ostre'"""
-
-        # if p == '2':
-        #     copy2(pt0_dir + file_name, pt1_dir + "Tepe_" + ts + ".txt")
-        # elif not p == '0':
-        #     copy2(pt0_dir + file_name, pt1_dir + "Ostre_D" + ts + ".txt")
-
-def pt2_2(file_name, final_dest):
-    """A"""
+def cleanup(file_name, final_dest):
+    """Cleans up files from tepe and ostre directories:
+    Removes from lines unnecessary data. Leaves only sensor number and measurements"""
 
     results = []
     with open(final_dest + file_name) as fil:
@@ -70,8 +56,9 @@ def pt2_2(file_name, final_dest):
             results.append([sensor] + measurements)
     return results
 
-def pt3_2(fil, file_class, final_dest, indexes):
-    """A"""
+def group(fil, file_class, final_dest, indexes):
+    """Groups measurements based on sensor number.
+    After each group is 16000 long, its saved to new (csv?) file"""
 
     acc_signal = []
     mic_signal = []
@@ -98,6 +85,14 @@ def pt3_2(fil, file_class, final_dest, indexes):
 
             indexes[file_class] = indexes[file_class] + 1
 
+
+def pt1(files_list, pt0_dir, final_dest):
+    """Groups files in 2 directories: 'tepe' and 'ostre'"""
+
+        # if p == '2':
+        #     copy2(pt0_dir + file_name, pt1_dir + "Tepe_" + ts + ".txt")
+        # elif not p == '0':
+        #     copy2(pt0_dir + file_name, pt1_dir + "Ostre_D" + ts + ".txt")
 
 def pt2(dirs, pt1_dir, pt2_dir):
     """Cleans up files from tepe and ostre directories:

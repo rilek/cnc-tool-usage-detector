@@ -7,11 +7,11 @@ from colorama import init, Fore, Style
 
 init()
 
-def save_features_to_file(features, for_excel=False):
+def save_features_to_file(features, filename, for_excel=False):
     """Takes matrix of features extracted from training set.
     Saves it to 'features.csv' file"""
 
-    with open("features.csv", "w+", newline='') as csvfile:
+    with open(filename, "w+", newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=',')
 
         # Required for Excel to handle separator properly

@@ -6,7 +6,7 @@ import sklearn.metrics as metrics
 from sklearn.model_selection import train_test_split
 from sklearn.externals import joblib
 from colorama import init
-import data_analysis.features as features
+import features as features
 from data_analysis import utils as u
 from config.config import CONFIG as c
 
@@ -48,8 +48,7 @@ def test_classifiers(classifiers, config, model_filename='model.pkl'):
         cm = metrics.confusion_matrix(y_test, y_pred)
         [[tp, fp], [fn, tn]] = cm
 
-
-
+        # Print training statistics
         u.pprint("\n{}.{}:".format(n, name), 'yellow')
         print("Score: {}%".format(round(score*100, 2)))
         print("False Alarm Rate: {}%".format(round(fp/(tn+fp)*100, 2)))
@@ -73,7 +72,7 @@ def test_classifiers(classifiers, config, model_filename='model.pkl'):
     u.pprint("\nChosen model: {}.{}, with score: {}%".format(bm_n, bm_name, round(bm_score*100, 2)),
              'red')
 
-    joblib.dump(bm_model, sys.path[0] + os.sep + "models" + os.sep + model_filename)
+    joblib.dump(bm_model, sys.path[0] + os.sep + ".." + os.sep + "models" + os.sep + model_filename)
 
 
 if __name__ == '__main__':

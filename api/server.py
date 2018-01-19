@@ -12,7 +12,7 @@ import json
 from bottle import run, request, post
 from data_analysis import utils as u
 from config.config import CONFIG as c
-CLF = joblib.load(sys.path[0] + "\\..\\models\\" + "model.pkl")
+CLF = joblib.load(sys.path[0] + sep + ".." + sep + "models" + sep + "model.pkl")
 
 
 @post('/')

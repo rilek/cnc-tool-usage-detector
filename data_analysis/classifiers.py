@@ -49,15 +49,15 @@ def test_classifiers(classifiers, config, model_filename='model.pkl'):
         [[tp, fp], [fn, tn]] = cm
 
         # Print training statistics
-        u.pprint("\n{}.{}:".format(n, name), 'yellow')
-        print("Score: {}%".format(round(score*100, 2)))
-        print("False Alarm Rate: {}%".format(round(fp/(tn+fp)*100, 2)))
-        print("AUC: {}".format(round(auc, 2)))
-        print("Report: ")
-        print(metrics.classification_report(y_test, np.matrix(y_pred),
-                                            target_names=['Tępe', 'Ostre']))
-        print("Confusion matrix:")
-        u.print_cm(cm, ["Tępe", "Ostre"])
+        # u.pprint("\n{}.{}:".format(n, name), 'yellow')
+        # print("Score: {}%".format(round(score*100, 2)))
+        # print("False Alarm Rate: {}%".format(round(fp/(tn+fp)*100, 2)))
+        # print("AUC: {}".format(round(auc, 2)))
+        # print("Report: ")
+        # print(metrics.classification_report(y_test, np.matrix(y_pred),
+        #                                     target_names=['Tępe', 'Ostre']))
+        # print("Confusion matrix:")
+        # u.print_cm(cm, ["Tępe", "Ostre"])
 
         models.append([clf, name, score, n])
 

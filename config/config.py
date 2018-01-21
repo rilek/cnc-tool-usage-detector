@@ -27,13 +27,14 @@ T = 1/FS
 M = int(L/2)
 F = [2*FS*(x)/L for x in list(range(0, M))]
 
-TEST_CSV = False
+TEST_CSV = True
 # VER = ""
 # TRAIN_FILES_DIR = ('new_train/final_f/' + VER) if TEST_CSV is True else 'train/'
 # LAST_GOOD = 1892 if TEST_CSV is True else 552
-VER = "v1/"
+VER = "v2/"
+LAST_NEW_GOOD = 928 if VER == "v1/" else 686
 TRAIN_FILES_DIR = ('train_data/new_train/final/' + VER) if TEST_CSV is True else 'train_data/train/'
-LAST_GOOD = 928 if TEST_CSV is True else 552
+LAST_GOOD = LAST_NEW_GOOD if TEST_CSV is True else 552
 
 CONFIG = {
     # 'VARS': ['AccXSignal', 'VelZSignal', 'AccXSignal1', 'MicSignal'],

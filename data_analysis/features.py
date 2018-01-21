@@ -21,6 +21,29 @@ from config.config import CONFIG as c
 # import time
 
 
+FEATURES = {
+    "mean": lambda x: np.mean(x),
+    "median": lambda x: np.median(x),
+    "std": lambda x: np.std(x),
+    "var": lambda x: np.var(x),
+    "ptp": lambda x: np.ptp(x),
+    "skew": lambda x: skew(x),
+    "kurtosis": lambda x: kurtosis(x),
+    "min": lambda x: min(x),
+    "max": lambda x: max(x),
+    "rms": lambda x: np.sqrt(np.mean(x**2)),
+
+}
+
+def get_features(signal, features):
+    """A"""
+    
+    results = []
+    for feature in features:
+        results.append( FEATURES[feature](signal) )
+    return results
+
+
 def get_fft(arr, config):
     """Takes array of numbers.
     Returns One-Side FFT of it."""
@@ -61,14 +84,19 @@ def extract_features(file_path, config):
 
     features_list = []
     for signal in signals:
-        features_list.extend([
-            # np.mean(signal),
-            np.median(signal),
-            np.std(signal),
-            skew(signal),
-            kurtosis(signal),
-            # np.ptp(signal)
-        ])
+        # features_list.extend([
+        #     # np.mean(signal),
+        #     np.median(signal),
+        #     np.std(signal),
+        #     skew(signal),
+        #     kurtosis(signal),
+        #     # np.ptp(signal),
+        #     # min(signal)
+        # ])
+        features_list.extend(
+            get_features(signal, ['median', 'std', 'skew', 'kurtosis'])
+        )
+
 
 
     features_list_fft = []
@@ -76,27 +104,35 @@ def extract_features(file_path, config):
         # PEAK IDXS [61:68]
         peak = signal[61-config['HERTZ_INDEX_MIN']+1 :68-config['HERTZ_INDEX_MIN']+1]
 
-        features_list_fft.extend([
-            # np.mean(signal),
-            np.median(signal),
-            np.std(signal),
-            skew(signal),
-            # np.sqrt(np.mean(signal**2)),
-            kurtosis(signal),
-            # np.var(signal),
-            # np.ptp(signal)
-        ])
+        # features_list_fft.extend([
+        #     # np.mean(signal),
+        #     # min(signal),
+        #     np.median(signal),
+        #     np.std(signal),
+        #     skew(signal),
+        #     # np.sqrt(np.mean(signal**2)),
+        #     kurtosis(signal),
+        #     # np.var(signal),
+        #     # np.ptp(signal)
+        # ])
+        features_list.extend(
+            get_features(signal, ['median', 'std', 'skew', 'kurtosis'])
+        )
 
-        features_list_fft.extend([
-            np.mean(peak),
-            np.median(peak),
-            np.std(peak),
-            skew(peak),
-            # np.sqrt(np.mean(peak**2)),
-            # kurtosis(peak),
-            # np.var(peak),
-            # np.ptp(peak)
-        ])
+        # features_list_fft.extend([
+        #     # max(peak),
+        #     np.mean(peak),
+        #     np.median(peak),
+        #     np.std(peak),
+        #     skew(peak),
+        #     # np.sqrt(np.mean(peak**2)),
+        #     # kurtosis(peak),
+        #     # np.var(peak),
+        #     # np.ptp(peak)
+        # ])
+        features_list.extend(
+            get_features(peak, ['median', 'std', 'skew', 'kurtosis', 'rms'])
+        )
     # return features_list 
     return features_list + features_list_fft
 

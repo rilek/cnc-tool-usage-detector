@@ -36,8 +36,16 @@ chokidar.watch(c["tmpFilesFolder"], {ignoreInitial: true}).on("add", name => {
   addLog('New file: ');
   addLog(name, 'yellow', true);
 
-  request.post(c["featuresApi"], {body: name} , (err, res) => {
-    request.post(c["classifierApi"], {json: {"features": JSON.parse(res.body)}}, (err, res) => {
+  request.post(c["featuresApi"], {body: name}, (err, res) => {
+    let feats = '';
+    try {
+      feats = JSON.parse(res.body)
+    } catch(err) {
+      console.log()
+      console.log(err)
+      console.log(res.body)
+    }
+    request.post(c["classifierApi"], {json: {"features": feats}}, (err, res) => {
       addLog("Real Class: ");
       addLog(file_class, null, true);
       addLog(". Predicted class: ", null, true);

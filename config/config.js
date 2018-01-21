@@ -6,7 +6,7 @@ export default {
   rootFolder: rootFolder,
   tmpFilesFolder: rootFolder + "tmp_files",
   featuresApi: "http://localhost:8082",
-  clasifierApi: "http://localhost:8080",
+  classifierApi: "http://localhost:8080",
   colors: {
     green: "green",
     red: "red",

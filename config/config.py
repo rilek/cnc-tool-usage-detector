@@ -31,7 +31,7 @@ TEST_CSV = True
 # VER = ""
 # TRAIN_FILES_DIR = ('new_train/final_f/' + VER) if TEST_CSV is True else 'train/'
 # LAST_GOOD = 1892 if TEST_CSV is True else 552
-VER = "v2/"
+VER = "v1/"
 LAST_NEW_GOOD = 928 if VER == "v1/" else 686
 TRAIN_FILES_DIR = ('train_data/new_train/final/' + VER) if TEST_CSV is True else 'train_data/train/'
 LAST_GOOD = LAST_NEW_GOOD if TEST_CSV is True else 552
@@ -57,4 +57,6 @@ CONFIG = {
     'f': F,
     'HERTZ_INDEX_MAX': F.index(next(i for i in F if i >= 250)),
     'HERTZ_INDEX_MIN': F.index(next(i for i in F if i >= 150)),
+    'fft_ranges': [[150, 250]], # [[from_Hz, to_Hz], ...]
+    'fft_peaks': [[190, 210]]
 }

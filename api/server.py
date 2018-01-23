@@ -21,7 +21,10 @@ def index():
     Returns predicted class."""
 
     feats = np.asarray(request.json["features"]).reshape(1, -1)
-    return str(int(CLF.predict(feats)[0]))
+    pred = CLF.predict(feats)[0]
+    if isinstance(pred, str):
+        print(pred)
+    return str(int(pred))
 
 def start_server():
     """Starts server"""

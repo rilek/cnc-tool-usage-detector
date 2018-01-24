@@ -7,6 +7,7 @@ export default {
   tmpFilesFolder: rootFolder + "tmp_files",
   featuresApi: "http://localhost:8082",
   classifierApi: "http://localhost:8080",
+  py_comm: "py",
   colors: {
     green: "green",
     red: "red",

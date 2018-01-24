@@ -5,7 +5,8 @@ var store = new Store();
 
 store.initReactors(
   machineStateReactor(),
-  toolStateReactor()
+  toolStateReactor(),
+  experimentStateReactor()
 );
 
 var ssocket = $.Deferred();
@@ -19,6 +20,14 @@ store.registerAction("change_tool_state", function(x) {
   store.setState({tool_state: x});
 });
 
+store.registerAction("change_experiment", function(x) {
+  socket.emit("change_experiment", x);
+});
+
+store.registerAction("set_experiment", function(x) {
+  store.setState({experiment: x});
+});
+
 store.registerAction("change_machine_state", function(x) {
   store.setState({machine_state: x});
 });
@@ -29,12 +38,10 @@ store.registerAction("machine_started", function() {
 
 store.registerAction("start_machine", function() {
   socket.emit('start_machine');
-  // store.setState({machine_state: "waiting"})
 });
 
 store.registerAction("stop_machine", function() {
   socket.emit('stop_machine');
-  // store.setState({machine_state: "waiting"});
 });
 
 store.registerAction("toggle_machine_state", function() {
@@ -65,7 +72,6 @@ store.registerAction("add_log_row", function(rawText, color, omitLine) {
 $(document).ready(function () {
   u = Utilities();
 
-  // u.addLogRow("==================== New Session ====================");
   socket = initSockets(u);
   initEventListeners(u, socket);
 });
@@ -78,7 +84,6 @@ function initSockets(u) {
 
   socket.on('connect', function () {
     console.log("connected!");
-    // u.addLogRow("Client connected to server!", "green");
   });
 
   socket.on('connected', function(data) {
@@ -91,9 +96,6 @@ function initSockets(u) {
     store.dispatch("change_machine_state", "stopped");
     store.dispatch("change_tool_state", -1);
     
-  });
-
-  socket.on('tmp_file_change', function (name) {
   });
 
   socket.on('reload', function() {
@@ -114,17 +116,9 @@ function initSockets(u) {
     store.dispatch("machine_started");
   });
 
-  socket.on('start_machine_fail', function() {
-    store.dispatch("change_machine_state", "stopped");
-  });
-
   socket.on('stop_machine_success', function() {
     store.dispatch("change_machine_state", "stopped");
     store.dispatch("change_tool_state", -1);
-  });
-
-  socket.on('stop_machine_fail', function() {
-    store.dispatch("change_machine_state", "running");
   });
 
   socket.on('sharp_tool', function() {
@@ -133,6 +127,10 @@ function initSockets(u) {
 
   socket.on('blunt_tool', function() {
     store.dispatch("change_tool_state", 1);
+  });
+
+  socket.on('set_experiment', function(x) {
+    store.dispatch("set_experiment", x)
   });
 
   return socket;
@@ -154,15 +152,11 @@ function initEventListeners(u, socket) {
   });
   
   $("#first-exp").on('click', function() {
-    $(".buffer-state-inner").hide();
-    $(this).addClass("btn-primary");
-    $("#second-exp").removeClass("btn-primary");
+    store.dispatch("change_experiment", 1);
   });
   
   $("#second-exp").on('click', function() {
-    $(".buffer-state-inner").show();
-    $(this).addClass("btn-primary");
-    $("#first-exp").removeClass("btn-primary");
+    store.dispatch("change_experiment", 2);
   });
 }
 
@@ -225,18 +219,19 @@ function machineStateReactor() {
   return [
     'machine_state',
     function(prop, action, newval, oldval) {
-
       switch(newval) {
         case "running":
           $(".power-button.on").removeClass("anim").addClass("disabled");
           $(".power-button.off").addClass("anim").removeClass("disabled");
           $('.machine-state-text').text("Włączona");
+          $('#first-exp, #second-exp').addClass("disabled");
           break;
-
+          
         case "stopped":
           $(".power-button.on").addClass("anim").removeClass("disabled");
           $(".power-button.off").removeClass("anim").addClass("disabled");
           $('.machine-state-text').text("Wyłączona");
+          $('#first-exp, #second-exp').removeClass("disabled");
           break;
           
         case "waiting":
@@ -250,11 +245,29 @@ function machineStateReactor() {
 }
 
 
+function experimentStateReactor() {
+  return [
+    'experiment',
+    function(prop, action, newval, oldval) {
+      switch(newval) {
+        case 1:
+          $("#first-exp").addClass("btn-primary");
+          $("#second-exp").removeClass("btn-primary");
+          break;
+          
+        case 2:
+          $("#second-exp").addClass("btn-primary");
+          $("#first-exp").removeClass("btn-primary");
+          break;
+      }
+    }
+  ];
+}
+
 function toolStateReactor() {
   return [
     'tool_state',
     function(prop, action, newval, oldval) {
-      // u.addLogRow("Changed tool state! New state: ");
 
       switch(newval) {
         case 1:

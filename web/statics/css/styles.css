@@ -134,4 +134,8 @@
   box-shadow: inset 0 13px 30px -20px rgba(0,0,0,.5);
 }
 
-#test, #clear-log { margin-right: 10px;  }
+#clear-log { margin-right: 10px;  }
+
+#first-exp.disabled, #second-exp.disabled {
+  pointer-events: none;
+}

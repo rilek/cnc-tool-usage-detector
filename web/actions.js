@@ -4,14 +4,14 @@ import {addLogRow} from './utils';
 registerAction("set_sharp_tool", (state, sockets) => {
   setState({'tool_state': 0});
   sockets.emit('sharp_tool');
-  addLogRow(sockets)("Tool state changed! New state: ");
+  addLogRow(sockets)("Tool state: ");
   addLogRow(sockets)("Sharp", "green", true);
 });
 
 registerAction("set_blunt_tool", (state, sockets) => {
   setState({'tool_state': 1});
   sockets.emit('blunt_tool');
-  addLogRow(sockets)("Tool state changed! New state: ");
+  addLogRow(sockets)("Tool state: ");
   addLogRow(sockets)("Blunt", "red", true);
 });
 

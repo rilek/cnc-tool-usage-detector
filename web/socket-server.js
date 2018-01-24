@@ -4,16 +4,14 @@ import path from 'path';
 import express from 'express';
 import socketio from 'socket.io';
 import {spawn} from 'child_process';
+import request from 'request';
+import chokidar from 'chokidar';
 import c from '../config/config';
 import { addLogRow, timeout, getClassStr } from './utils';
 import initState, {dispatch, setState, getState} from './store';
 import a from './actions';
-import request from 'request';
-import { StringDecoder } from 'string_decoder';
-import chokidar from 'chokidar';
 
 
-// const port = process.env.PORT || 8081;
 const port = 8081;
 const app = express();
 const server = http.Server(app);
@@ -45,16 +43,17 @@ chokidar.watch(c["tmpFilesFolder"], {ignoreInitial: true}).on("add", name => {
       console.log(err)
       console.log(res.body)
     }
-    request.post(c["classifierApi"], {json: {"features": feats}}, (err, res) => {
-      addLog("Real Class: ");
-      addLog(file_class, null, true);
-      addLog(". Predicted class: ", null, true);
-      addLog(res.body, null, true);
-      
-      if (res.body === 1)
-        dispatch("set_blunt_tool", io.sockets);
-      else if (res.body === 0)
-        dispatch("set_sharp_tool", io.sockets);
+    request.post(c["classifierApi"], {json: {"features": feats, "experiment": getState('experiment')}},
+      (err, res) => {
+        addLog("Real Class: ");
+        addLog(file_class, null, true);
+        addLog(". Predicted class: ", null, true);
+        addLog(res.body, null, true);
+        
+        if (res.body === 1)
+          dispatch("set_blunt_tool", io.sockets);
+        else if (res.body === 0)
+          dispatch("set_sharp_tool", io.sockets);
     });
   });
 });
@@ -77,14 +76,25 @@ io.on('connection', socket => {
   socket.on("disconnect", () => {
     addLog("User diconnected.", 'red');
   })
+  
+  socket.on("change_experiment", (x) => {
+    setState({experiment: x});
+    addLog("Experiment changed! New experiment: ");
+    addLog(x === 1 ? "MAT" : "CSV", 'yellow', true);
+    io.sockets.emit("set_experiment", x)
+  })
 
   socket.on('start_machine', () => {
     addLog("Starting machine...", 'yellow');
 
     (async () => {
+      if(subprocess)
+        return;
+
       await timeout(2000);
-      subprocess = spawn('py', [c["rootFolder"] + 'run_emulator.py'], {detached: true});
-      console.log(c["rootFolder"] + 'machine.py');
+      subprocess = spawn(c['py_comm'],
+                         [c["rootFolder"] + 'run_emulator.py', getState("experiment")],
+                         {detached: true});
       subprocess.unref();
       addLog(`Subprocess ID: ${subprocess.pid}`);
       io.sockets.emit('start_machine_success');
@@ -93,6 +103,9 @@ io.on('connection', socket => {
   });
 
   socket.on('stop_machine', () => {
+    if(!subprocess)
+      return;
+
     addLog(`Killing subprocess: ${subprocess.pid}`);
     addLog("Stopping machine...", "yellow");
 

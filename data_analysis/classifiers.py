@@ -1,6 +1,5 @@
 """Classifiers testing module"""
 
-import sys, os
 import numpy as np
 import sklearn.metrics as metrics
 from sklearn.model_selection import train_test_split
@@ -13,10 +12,10 @@ from config.config import CONFIG as c
 init()
 
 
-def test_classifiers(classifiers, config, model_filename='model.pkl'):
+def test_classifiers(classifiers, config):
     """Take array of classifiers to test and configuration dictionary
     Tests each classifier, its score is printed.
-    Best one is printed with score ans saved to 'model_filename' file """
+    Best one is printed with score ans saved to config['MODEL_FILE'] file """
 
     last_good = config['TRAIN_FILES_LAST_GOOD']
     x_data = features.get_signal_features(config['TRAIN_FILES_DIR'],
@@ -49,15 +48,15 @@ def test_classifiers(classifiers, config, model_filename='model.pkl'):
         [[tp, fp], [fn, tn]] = cm
 
         # Print training statistics
-        # u.pprint("\n{}.{}:".format(n, name), 'yellow')
-        # print("Score: {}%".format(round(score*100, 2)))
-        # print("False Alarm Rate: {}%".format(round(fp/(tn+fp)*100, 2)))
-        # print("AUC: {}".format(round(auc, 2)))
-        # print("Report: ")
-        # print(metrics.classification_report(y_test, np.matrix(y_pred),
-        #                                     target_names=['Tępe', 'Ostre']))
-        # print("Confusion matrix:")
-        # u.print_cm(cm, ["Tępe", "Ostre"])
+        u.pprint("\n{}.{}:".format(n, name), 'yellow')
+        print("Score: {}%".format(round(score*100, 2)))
+        print("False Alarm Rate: {}%".format(round(fp/(tn+fp)*100, 2)))
+        print("AUC: {}".format(round(auc, 2)))
+        print("Report: ")
+        print(metrics.classification_report(y_test, np.matrix(y_pred),
+                                            target_names=['Tępe', 'Ostre']))
+        print("Confusion matrix:")
+        u.print_cm(cm, ["Tępe", "Ostre"])
 
         models.append([clf, name, score, n])
 
@@ -72,7 +71,7 @@ def test_classifiers(classifiers, config, model_filename='model.pkl'):
     u.pprint("\nChosen model: {}.{}, with score: {}%".format(bm_n, bm_name, round(bm_score*100, 2)),
              'red')
 
-    joblib.dump(bm_model, sys.path[0] + os.sep + ".." + os.sep + "models" + os.sep + model_filename)
+    joblib.dump(bm_model, c['MODEL_FILE'])
 
 
 if __name__ == '__main__':

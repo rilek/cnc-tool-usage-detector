@@ -1,26 +1,20 @@
 """Features extraction module"""
 
 import sys
-
 import os
-sys.path.insert(1, sys.path[0] + os.sep + ".." + os.sep)
 import csv
+import json
 import numpy as np
-# from numpy import matrix, mean, median, std, absolute, fft
 from pandas import read_csv
 from scipy.io import loadmat
-# import scipy.stats as ss
 from scipy.stats import skew, kurtosis
-from bottle import run, request, post, get
-# from statsmodels import robust
-import matplotlib.pyplot as plt
-import json
-# import collections
+from bottle import run, request, post
+sys.path.insert(1, sys.path[0] + os.sep + ".." + os.sep)
 from data_analysis import utils as u
 from config.config import CONFIG as c
-# import time
 
 
+F = c['f']
 FEATURES = {
     "mean": lambda x: np.mean(x),
     "median": lambda x: np.median(x),
@@ -34,17 +28,9 @@ FEATURES = {
     "rms": lambda x: np.sqrt(np.mean(x**2))
 }
 
-def get_features(signal, features):
-    """A"""
-    
-    results = []
-    for feature in features:
-        results.append( FEATURES[feature](signal) )
-    return results
-
-F = c['f']
 
 def get_Hz_index(hz):
+    """Get index of specific HZ in FFT signal"""
     return F.index(next(i for i in F if i >= hz))
 
 def get_Hz_range(signal, _range):
@@ -63,77 +49,56 @@ def get_fft(arr, config):
 
     return ss_spectrum[0:config['f'].index(next(i for i in config['f'] if i >= 1000))]
 
-def extract_features(file_path, config):
+def get_single_signal_features(signal, features):
+    """Get signals features"""
+
+    results = []
+    for feature in features:
+        results.append(FEATURES[feature](signal))
+    return results
+
+def get_features(signals, ffts, c, experiment=None):
+    """Get features"""
+
+    features_list = []
+    if experiment == 1:
+        features_list = get_old_data_features(signals, ffts)
+    elif experiment == 2:
+        features_list = get_v1_data_features(signals, ffts)
+    elif c['TEST_CSV'] is False:
+        features_list = get_old_data_features(signals, ffts)
+    elif c['VER'] == 'v1/':
+        features_list = get_v1_data_features(signals, ffts)
+    elif c['VER'] == 'v2/':
+        features_list = get_v2_data_features(signals, ffts)
+
+    return features_list
+
+def extract_features(file_path, config, experiment=None):
     """Takes path to file with signals.
     Separate specifies signals.
     Computes Mean, Median, STD, Skew, Kurtosis for each one.
     Returns flat array of features"""
 
-    features_list = []
-    features_list_fft = []
+    file_extension = file_path.split(".")[-1]
+    experiment = 1 if file_extension == "mat" else 2
 
-    if config['TEST_CSV']:
+    if file_extension == "csv":
         file_data = read_csv(file_path, header=None)
         signals = [file_data[0].tolist(), file_data[1].tolist()]
-    else:
+    elif file_extension == "mat":
         file_data = loadmat(file_path)
         signals = [np.transpose(file_data[signal])[0] for signal in config['VARS']]
 
-
     ffts = [get_fft(signal, config) for signal in signals]
 
-    # print(file_path)
+    return get_features(signals, ffts, config, experiment)
 
-    # print(config['HertzIndex'])
-    # plt.plot(xf[61:68], ffts[1][61:68])
-    # plt.show()    
-
-    # xf = 2*np.linspace(0.0, 1.0/(2.0*config['T']), config['L']/2)
-    # plt.plot(get_Hz_range(xf, [0, 1000]), ffts[1])
-    # plt.show()
-
-
-    # ACC signal features
-    features_list.extend(
-        get_features(signals[0],
-                     ['mean', 'median', 'skew', 'std', 'kurtosis', 'ptp']))
-    # ACC FFT
-    features_list_fft.extend(
-        get_features(get_Hz_range(ffts[0], [150, 250]),
-                     ['mean', 'std', 'ptp', 'var', 'skew', 'kurtosis', 'max']))
-    # ACC FFT PEAKS
-    features_list_fft.extend(
-        get_features(get_Hz_range(ffts[0], [190, 210]),
-                     ['mean', 'median', 'skew', 'kurtosis', 'rms', 'max']))
-
-    # Mic signal features
-    features_list.extend(
-        get_features(signals[1],
-                     ['median', 'skew', 'std', 'kurtosis', 'ptp', 'min']))
-    # Mic FFT
-    features_list_fft.extend(
-        get_features(get_Hz_range(ffts[1], [150, 250]),
-                     ['mean', 'median', 'skew', 'kurtosis', 'rms', 'max']))
-    # Mic FFT Peaks
-    features_list_fft.extend(
-        get_features(get_Hz_range(ffts[1], [190, 210]),
-                     ['mean', 'median', 'skew', 'kurtosis', 'rms', 'max']))
-    # features_list_fft.extend(
-    #     get_features(get_Hz_range(ffts[1], [690, 710]),
-    #                  ['max']))
-
-
-
-    # return features_list 
-    return features_list + features_list_fft
-
-
-def get_signal_features(directory, config, exists=True, csvfilename='features.csv'):
+def get_signal_features(directory, config, exists=False, csvfilename='features.csv'):
     """Takes directory path, and two optional arguments.
     If exists if True, then features are taken from 'csvfilename' file
     Else features are computed from every *.mat file in directory
     Returns matrix of features"""
-
 
     if exists is False:
         print("Extracting features from files")
@@ -148,6 +113,95 @@ def get_signal_features(directory, config, exists=True, csvfilename='features.cs
             result = [np.array([float(i) for i in row]) for row in reader]
             return np.matrix(result)
 
+def get_old_data_features(signals, ffts):
+    results = []
+
+    # ACC signal features
+    results.extend(
+        get_single_signal_features(signals[0],
+                                   ['median', 'skew', 'std', 'kurtosis']))
+    # ACC FFT
+    results.extend(
+        get_single_signal_features(ffts[0],
+                                   ['median', 'std', 'skew', 'kurtosis']))
+    # ACC FFT pt2
+    results.extend(
+        get_single_signal_features(get_Hz_range(ffts[0], [42, 62]),
+                                   ['mean', 'median', 'std', 'skew']))
+
+    # Mic signal features
+    results.extend(
+        get_single_signal_features(signals[1],
+                                   ['median', 'skew', 'std', 'kurtosis']))
+    # Mic FFT
+    results.extend(
+        get_single_signal_features(ffts[1],
+                                   ['median', 'std', 'skew', 'kurtosis']))
+    # # Mic FFT Peaks
+    results.extend(
+        get_single_signal_features(get_Hz_range(ffts[1], [42, 62]),
+                                   ['mean', 'median', 'std', 'skew']))
+    return results
+
+def get_v1_data_features(signals, ffts):
+    results = []
+
+    # ACC signal features
+    results.extend(
+        get_single_signal_features(signals[0],
+                                   ['median', 'skew', 'std', 'kurtosis']))
+    # ACC FFT
+    results.extend(
+        get_single_signal_features(ffts[0],
+                                   ['mean', 'median', 'std', 'skew', 'kurtosis']))
+    # ACC FFT PEAKS
+    results.extend(
+        get_single_signal_features(get_Hz_range(ffts[0], [42, 62]),
+                                   ['mean', 'median', 'std', 'skew', 'rms']))
+
+    # Mic signal features
+    results.extend(
+        get_single_signal_features(signals[1],
+                                   ['median', 'skew', 'std', 'kurtosis']))
+    # Mic FFT
+    results.extend(
+        get_single_signal_features(ffts[1],
+                                   ['mean', 'median', 'std', 'skew', 'kurtosis']))
+    # # Mic FFT Peaks
+    results.extend(
+        get_single_signal_features(get_Hz_range(ffts[1], [42, 62]),
+                                   ['mean', 'median', 'std', 'skew', 'rms']))
+    return results
+
+def get_v2_data_features(signals, ffts):
+    results = []
+
+    # ACC signal features
+    results.extend(
+        get_single_signal_features(signals[0],
+                                   ['mean', 'median', 'skew', 'std', 'kurtosis', 'ptp']))
+    # ACC FFT
+    results.extend(
+        get_single_signal_features(get_Hz_range(ffts[0], [150, 250]),
+                                   ['mean', 'std', 'ptp', 'var', 'skew', 'kurtosis', 'max']))
+    # ACC FFT PEAKS
+    results.extend(
+        get_single_signal_features(get_Hz_range(ffts[0], [190, 210]),
+                                   ['mean', 'median', 'skew', 'kurtosis', 'rms', 'max']))
+
+    # Mic signal features
+    results.extend(
+        get_single_signal_features(signals[1],
+                                   ['median', 'skew', 'std', 'kurtosis', 'ptp', 'min']))
+    # Mic FFT
+    results.extend(
+        get_single_signal_features(get_Hz_range(ffts[1], [150, 250]),
+                                   ['mean', 'median', 'skew', 'kurtosis', 'rms', 'max']))
+    # Mic FFT Peaks
+    results.extend(
+        get_single_signal_features(get_Hz_range(ffts[1], [190, 210]),
+                                   ['mean', 'median', 'skew', 'kurtosis', 'rms', 'max']))
+    return results
 
 
 @post('/')
@@ -161,18 +215,4 @@ def start_server():
     run(host='localhost', port=8082)
 
 if __name__ == "__main__":
-
     start_server()
-    # if len(sys.argv) > 1:
-    #     args = sys.argv[1:]
-    #     _dir = args[0]
-    #     dt = {}
-    #     ft = extract_features(_dir, c)
-    #     pred_cls = "2"
-    #     if _dir.split("/")[-1].startswith("Tepe"):
-    #         pred_cls = "1"
-    #     elif _dir.split("/")[-1].startswith("Ostre"):
-    #         pred_cls = "0"
-
-    #     print('{"features":' + str(ft) + ', "class": '+ pred_cls  + '}')
-    #     sys.stdout.flush()

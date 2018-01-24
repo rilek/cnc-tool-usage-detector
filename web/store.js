@@ -2,7 +2,8 @@
 let state = {
   machine_state: "stopped",
   tool_state: -1,
-  buffer_state: 0
+  buffer_state: 0,
+  experiment: 1
 };
 
 let actions = {};
